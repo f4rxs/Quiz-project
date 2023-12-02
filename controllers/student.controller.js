@@ -4,7 +4,7 @@ const { registerStudent,
     getAllStudentsUserNames,
     deleteStudentById,
     updateStudentById,
-    changeStudentPassword } = require('../services/student.service');
+    changeStudentPassword, getAllStudents } = require('../services/student.service');
 const { validateRegisterStudent,
     validateUpdateStudent } = require('../validaters/student.validator');
 
@@ -271,6 +271,28 @@ const changeStudentPasswordController = async (req, res) => {
 };
 
 
+const getAllStudentsController = async (req, res) => {
+
+    try {
+        const students = await getAllStudents();
+        if (students.length > 0) {
+            res.render('getStudents', {students});
+
+            // res.status(200).json(students);
+
+        } else {
+            res.status(404).json({ message: 'No students found' });
+
+        }
+
+
+    } catch (error) {
+        console.error("an erro occured in getAllstudentsController", error);
+        res.status(500).json({ message: 'an error occured while fetching for the students' });
+    }
+}
+
+
 // Export the controller function for use in routes
 module.exports = {
     getStudentByIDController,
@@ -278,5 +300,6 @@ module.exports = {
     registerStudentController,
     deleteStudentByIdController,
     updateStudentByIdController,
-    changeStudentPasswordController
+    changeStudentPasswordController,
+    getAllStudentsController
 };

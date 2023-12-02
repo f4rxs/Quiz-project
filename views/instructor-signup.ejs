@@ -1,3 +1,29 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up</title>
+</head>
+<body>
+    <form method="POST" action="/quizsystem/instruct">
+        <div class="form-group">
+          <label for="Username">First Name</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">password</label>
+          <input type="text" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+      </form>
+</body>
+</html> -->
+
 <!-- views/instructor-signup.ejs -->
 
 <!DOCTYPE html>
@@ -63,22 +89,21 @@
         <h1 class="text-center mb-4">Instructor Sign Up</h1>
 
         <!-- Your instructor sign-up form with Bootstrap classes -->
-        <form id="signupForm" action="/quizsystem/instruct" method="post" class="mt-4">
-            <!-- Add your sign-up form fields here -->
+        <form method="POST" action="/quizsystem/instruct">
             <div class="form-group">
-                <label for="Username">Username:</label>
-                <input type="text" id="Username" name="Username" class="form-control" required>
+              <label for="Username">First Name</label>
+              <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="Email">Email:</label>
-                <input type="email" id="Email" name="Email" class="form-control" required>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="Password">Password:</label>
-                <input type="password" id="Password" name="Password" class="form-control" required>
+              <label for="password">password</label>
+              <input type="text" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-        </form>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+          </form>
 
         <!-- Login link -->
         <a href="/quizsystem/login/instructor" class="login-link">Already have an account? Log in here</a>
@@ -88,42 +113,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Add a submit event listener to the form
-            document.getElementById('signupForm').addEventListener('submit', function (event) {
-                // Prevent the default form submission
-                event.preventDefault();
-
-                // Call the loginInstructor service using fetch or your preferred method
-                // Example using fetch:
-                fetch('/quizsystem/instruct', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        Email: document.getElementById('Email').value,
-                        Password: document.getElementById('Password').value,
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Handle the response from the service
-                    console.log(data); // You can update this part based on your needs
-                    // Redirect to the login page if successful
-                    if (data.success) {
-                        window.location.href = '/quizsystem/login/instructor';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during loginInstructor service:', error);
-                    // Handle the error, show a message, or redirect the user to an error page
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>

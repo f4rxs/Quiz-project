@@ -38,7 +38,7 @@ router.get('/login/instructor', (req, res) => {
     res.render('instructor-login');
 });
 router.get('/sign/instructor',(req,res)=>{
-    res.render('instructor-signup.ejs');
+    res.render('quizsystem/instructor-signup.ejs');
 });
 
 module.exports = router;

@@ -145,6 +145,22 @@ const changeStudentPassword = async (StudentID, newPassword) => {
     }
 };
 
+const getAllStudents = async () => {
+
+    try {
+        const sql = 'SELECT StudentID,Username,Email FROM student';
+
+        const result = await query(sql);
+        return result;
+
+    } catch (error) {
+        throw new Error(error);
+
+    }
+
+
+}
+
 
 /**
  * Exports the student service functions.
@@ -155,5 +171,6 @@ module.exports = {
     getStudentById,
     deleteStudentById,
     updateStudentById,
-    changeStudentPassword
+    changeStudentPassword,
+    getAllStudents
 };
