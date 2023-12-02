@@ -1,0 +1,88 @@
+<!-- views/instructor-login.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Login</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include any additional stylesheets or scripts you may need -->
+    <style>
+        body {
+            background: linear-gradient(to right, #3498db, #6c5ce7);
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            background-color: rgba(52, 152, 219, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label {
+            color: #000;
+        }
+
+        .btn-primary {
+            background-color: #6c5ce7;
+            border-color: #6c5ce7;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #4a3cc4;
+            border-color: #4a3cc4;
+        }
+
+        .signup-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Instructor Login</h1>
+
+        <!-- Your instructor login form with Bootstrap classes -->
+        <form action="/instructor-login" method="post" class="mt-4">
+            <div class="form-group">
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <input type="password" id="Password" name="Password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+
+        <!-- Sign up link -->
+        <a href="/quizsystem/sign/instructor" class="signup-link">Don't have an account? Sign up here</a>
+    </div>
+
+    <!-- Include Bootstrap JS and any additional scripts or libraries you may need -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
