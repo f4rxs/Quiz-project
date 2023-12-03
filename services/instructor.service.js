@@ -46,28 +46,32 @@ const instructorLoginService = async (email, password) => {
   try {
     const instructor = await getInstructorByEmail(email);
 
+
     if (instructor.length > 0) {
-      const hashedPassword = instructor[0].Password;
+      const storedPassword = instructor[0].Password;
 
-      // Compare the entered password with the hashed password
-      const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-      if (passwordMatch) {
+      // Compare the entered password with the stored password
+      if (password === storedPassword) {
         // Passwords match, return instructor details (excluding the password)
         const { Password, ...instructorDetails } = instructor[0];
         return instructorDetails;
       } else {
         // Incorrect password
+        console.log('Incorrect password');
         throw new Error('Incorrect password');
       }
     } else {
       // No instructor found with the specified email
+      console.log('Instructor not found');
       throw new Error('Instructor not found');
     }
   } catch (error) {
+    console.error(`Login failed: ${error.message}`);
     throw new Error(`Login failed: ${error.message}`);
   }
 };
+
 
 
 /**

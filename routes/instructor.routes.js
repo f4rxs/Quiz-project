@@ -28,17 +28,27 @@ router.put('/instruct-pass/:id', validateUpdatePassword(), changePasswordControl
 // post routes
 router.post('/instruct', validateRegisterInstructor(), registerInstructorController);
 router.post('/instructor-login', instructorLoginController);
-// router.post('/instructor-login');
+
 
 // get routes
 router.get('/instructors', getAllInstructorsUsernamesController);
 router.get('/instruct/:id', getInstructorByIdController);
 router.get('/instruct-email/:email', getInstructorByEmailController);
+
+
+// render routes 
 router.get('/login/instructor', (req, res) => {
     res.render('instructor-login');
 });
-router.get('/sign/instructor',(req,res)=>{
-    res.render('quizsystem/instructor-signup.ejs');
+router.get('/sign/instructor', (req, res) => {
+    res.render('instructor-signup');
 });
+router.get('/instructor-page',(req,res)=>{
+    res.render('instructorPage');
+});
+router.get('/instructor/students',(res,req)=>{
+    res.render('getStudents');
+});
+
 
 module.exports = router;

@@ -4,7 +4,7 @@ const { registerStudent,
     getAllStudentsUserNames,
     deleteStudentById,
     updateStudentById,
-    changeStudentPassword, getAllStudents } = require('../services/student.service');
+    changeStudentPassword, getAllStudents, getStudentByEmail, studentLoginService } = require('../services/student.service');
 const { validateRegisterStudent,
     validateUpdateStudent } = require('../validaters/student.validator');
 
@@ -115,7 +115,9 @@ const registerStudentController = async (req, res) => {
         } else if (result.affectedRows === 1) {
 
             // Send a 200 OK response with a success message
-            res.status(200).json({ message: 'Student registered successfully' });
+            // res.status(200).json({ message: 'Student registered successfully' });
+            res.render('student-login');
+
         } else {
 
             // send a 500 response with a fail message
@@ -143,21 +145,22 @@ const registerStudentController = async (req, res) => {
  */
 const deleteStudentByIdController = async (req, res) => {
     // Extract the student ID from the request parameters
-    const { id } = req.params;
+    const { studentID } = req.params;
 
     try {
         // Call the service function to delete the student by ID
-        const result = await deleteStudentById(id);
+        const result = await deleteStudentById(studentID);
 
         // Check if the student is found and deleted
         if (result.affectedRows === 1) {
 
             // Send a 200 OK response with a success message
-            res.status(200).json({ message: 'Student deleted successfully.' });
+            // res.status(200).json({ message: 'Student deleted successfully.' });
+            res.redirect('/quizsystem/students');
         } else {
 
             // Send a 404 Not Found response with an error message
-            res.status(404).json({ message: `The student with id ${id} is not found` });
+            res.status(404).json({ message: `The student with id ${studentID} is not found` });
 
         }
     } catch (error) {
@@ -208,7 +211,8 @@ const updateStudentByIdController = async (req, res) => {
         }
 
         if (result.affectedRows > 0) {
-            res.status(200).json({ message: 'Student updated successfully.' });
+            res.render('getStudents', { studentID: studentID }, { message: 'Student updated successfully.' });
+            // res.status(200).json({ message: 'Student updated successfully.' });
         } else {
             res.status(404).json({ message: `Student with ID ${studentID} not found.` });
         }
@@ -276,7 +280,7 @@ const getAllStudentsController = async (req, res) => {
     try {
         const students = await getAllStudents();
         if (students.length > 0) {
-            res.render('getStudents', {students});
+            res.render('getStudents', { students });
 
             // res.status(200).json(students);
 
@@ -292,7 +296,40 @@ const getAllStudentsController = async (req, res) => {
     }
 }
 
+const getStudentByEmailController = async (req, res) => {
+    const { email } = req.params;
 
+    try {
+        const student = await getStudentByEmail(email);
+        if (student.length > 0) {
+            res.status(200).json(student);
+
+        } else {
+            res.status(404).json({ message: "Student not found" });
+
+        }
+    } catch (error) {
+        console.error("An error occured in getStudentByEmailController", error);
+        res.status(500).json({ message: "an error occured during fetching" });
+    }
+}
+
+const studentLoginController = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const studentDetails = await studentLoginService(email, password);
+        if (studentDetails) {
+            res.render("studentPage");
+            // res.status(200).json(studentDetails);
+        } else {
+            res.status(401).json({ message: 'Authentication failed' });
+        }
+    } catch (error) {
+        console.error(`student login failed: ${error.message}`);
+        res.status(401).json({ message: 'Login failed', error: error.message });
+    }
+};
 // Export the controller function for use in routes
 module.exports = {
     getStudentByIDController,
@@ -301,5 +338,7 @@ module.exports = {
     deleteStudentByIdController,
     updateStudentByIdController,
     changeStudentPasswordController,
-    getAllStudentsController
+    getAllStudentsController,
+    getStudentByEmailController,
+    studentLoginController
 };

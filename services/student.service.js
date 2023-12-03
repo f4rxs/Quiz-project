@@ -161,6 +161,45 @@ const getAllStudents = async () => {
 
 }
 
+const getStudentByEmail = async (email) => {
+
+    try {
+        const sql = 'SELECT * FROM student WHERE Email=?';
+
+        const result = await query(sql,[email]);
+        return result;
+
+
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+const studentLoginService = async (email, password) => {
+    try {
+        const student = await getStudentByEmail(email);
+
+
+        if (student.length > 0) {
+            const storedPassword = student[0].Password;
+
+
+            if (password === storedPassword) {
+                const { Password, ...studentDetails } = student[0];
+                return studentDetails;
+            } else {
+                console.log('Incorrect password');
+                throw new Error('Incorrect password');
+            }
+        } else {
+            console.log('student not found');
+            throw new Error('student not found');
+        }
+    } catch (error) {
+        console.error(`Login failed: ${error.message}`);
+        throw new Error(`Login failed: ${error.message}`);
+    }
+};
 
 /**
  * Exports the student service functions.
@@ -172,5 +211,7 @@ module.exports = {
     deleteStudentById,
     updateStudentById,
     changeStudentPassword,
-    getAllStudents
+    getAllStudents,
+    getStudentByEmail,
+    studentLoginService
 };

@@ -8,6 +8,7 @@ const { validationResult } = require('express-validator');
 const { validateRegisterInstructor,
   validateUpdateInstructor,
   validateUpdatePassword } = require('../validaters/instructorValidator');
+const { message } = require('statuses');
 
 /**
  * Controller for registering a new instructor.
@@ -43,7 +44,7 @@ const registerInstructorController = async (req, res) => {
     if (result.error === 'Instructor already registered') {
       res.status(400).json({ message: 'Instructor is already registered' });
     } else if (result.affectedRows === 1) {
-      res.redirect('/instructor-login');
+      res.render('instructor-login');
       // res.status(200).json({ message: 'Instructor registered successfully' });
     } else {
       res.status(500).json({ message: 'Instructor registration failed' });
@@ -291,12 +292,16 @@ const getInstructorByEmailController = async (req, res) => {
 }
 
 const instructorLoginController = async (req, res) => {
-  const { Email, Password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const instructorDetails = await instructorLoginService(Email, Password);
-    // res.status(200).json(instructorDetails);
-    res.render('instructor-login',instructorDetails);
+    const instructorDetails = await instructorLoginService(email, password);
+    if (instructorDetails) {
+      res.render("instructorPage");
+      // res.status(200).json(instructorDetails);
+    } else {
+      res.status(401).json({ message: 'Authentication failed' });
+    }
   } catch (error) {
     console.error(`Instructor login failed: ${error.message}`);
     res.status(401).json({ message: 'Login failed', error: error.message });
