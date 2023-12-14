@@ -3,7 +3,6 @@ const { query } = require('../database/db');
 
 
 
-
 /**
  * Register a new student.
  * @param {string} Username - The username of the new student.
@@ -166,7 +165,7 @@ const getStudentByEmail = async (email) => {
     try {
         const sql = 'SELECT * FROM student WHERE Email=?';
 
-        const result = await query(sql,[email]);
+        const result = await query(sql, [email]);
         return result;
 
 
@@ -186,7 +185,9 @@ const studentLoginService = async (email, password) => {
 
             if (password === storedPassword) {
                 const { Password, ...studentDetails } = student[0];
-                return studentDetails;
+
+
+                return { studentDetails };
             } else {
                 console.log('Incorrect password');
                 throw new Error('Incorrect password');

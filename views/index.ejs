@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,92 +6,249 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz System</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css">
-    <style>
-        body {
-            background: linear-gradient(to right, #3498db, #020011);
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background-color: rgba(120, 182, 166, 0.932);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .card {
-            background-color: #3498db;
-            color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 15px 0;
-            transition: background-color 0.3s ease;
-        }
-
-        .card:hover {
-            background-color: #4a90e2;
-        }
-
-        .btn-primary {
-            background-color: #6c5ce7;
-            border-color: #6c5ce7;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #4a3cc4;
-            border-color: #4a3cc4;
-        }
-
-        h1,
-        h5 {
-            color: #000;
-        }
-
-        p {
-            color: #2c3e50;
-        }
-    </style>
 </head>
 
+<style>
+    body {
+        background-image: url(https://e0.pxfuel.com/wallpapers/149/259/desktop-wallpaper-web-development.jpg);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .container {
+        margin-top: 50px;
+        padding: 20px;
+        background-color: transparent;
+        border: 1px solid #ccc;
+        border-radius: 40px;
+        box-shadow: 0 0 30px rgba(51, 54, 54, 0.1);
+        font-family: 'Times, Times New Roman, serif';
+        color: #cac8a8;
+        font-size: 16px;
+        line-height: 1.5;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .navbar {
+        background-color: #020b14;
+        border-bottom: 4px solid #899b9e;
+    }
+
+    .navbar-brand {
+        color: #cac8a8;
+        font-size: 24px;
+        font-family: 'Comic Sans MS, Comic Sans, cursive';
+    }
+
+    .navbar-nav .nav-link {
+        color: #ffffff;
+        font-size: 18px;
+        margin-right: 10px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #17a2b8;
+    }
+
+    .navbar-toggler-icon {
+        background-color: #1b1a1a;
+        border-radius: 4px;
+        padding: 2px;
+        color: #fff;
+    }
+
+    .nav-item {
+        margin-right: 15px;
+    }
+
+    .nav-item .bi-instagram {
+        color: #39acc0;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    .nav-item .bi-facebook {
+        color: #39acc0;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    .nav-item .bi-google {
+        color: #39acc0;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    .nav-item:hover .bi-instagram {
+        color: #d41f1f;
+    }
+
+    .nav-item:hover .bi-facebook {
+        color: blue;
+    }
+
+    .nav-item:hover .bi-google {
+        color: rgb(187, 187, 59);
+    }
+
+    .nav-item .bi-instagram,
+    .nav-item .bi-facebook,
+    .nav-item .bi-google {
+        transition: color 0.3s ease;
+    }
+
+    .btn-outline-success {
+        color: #e5f0e7;
+        background-color: transparent;
+        border-color: #020b14;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .btn-outline-success:hover {
+        color: #fff;
+        background-color: #b0c9b6;
+    }
+
+    .form-control {
+        border-color: #899b9e;
+        border-radius: 4px;
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    .card-text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #e9e3e3;
+        font-family: 'American Typewriter', serif;
+    }
+
+    .btn-primary {
+        background-color: #1b1a1a;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+
+    .btn-primary:hover {
+        background-color: #1e2022;
+    }
+
+    .card {
+        background-color: transparent;
+        border-color: #e7d4d4;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .card:hover {
+        background-color: rgba(94, 88, 88, 0.8);
+        backdrop-filter: blur(10px);
+    }
+
+    .ml-auto {
+        margin-left: auto;
+    }
+</style>
+
 <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Quiz System </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Instagram Icon -->
+        <a href="https://www.instagram.com/universityofbalamand/?hl=en" class="nav-item ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
+            </svg>
+        </a>
+
+        <!-- Facebook Icon -->
+        <a href="https://www.facebook.com/balamand.edu.lb/" class="nav-item ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-facebook"
+                viewBox="0 0 16 16">
+                <path
+                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951" />
+            </svg>
+        </a>
+
+        <!-- Google Icon -->
+        <a href="https://www.balamand.edu.lb/home/Pages/default.aspx" class="nav-item ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google"
+                viewBox="0 0 16 16">
+                <path
+                    d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Main Content -->
     <div class="container">
-        <h1>Welcome to the Quiz System</h1>
-        <p class="lead">Enhance your learning experience with our interactive quiz platform. Choose your role and get started!</p>
+        <div id="about" class="mb-4">
+            <h1>Welcome to the Quiz System</h1>
+            <p class="lead">Enhance your learning experience with our interactive quiz platform. Choose your role and
+                get started!</p>
+        </div>
 
         <!-- Role Selection -->
         <div class="card-deck">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Student</h5>
-                    <p class="card-text">Select this option if you are a student. Take quizzes and track your progress.</p>
+                    <p class="card-text">Select this option if you are a student. Take quizzes and track your progress.
+                    </p>
                     <a href="/quizsystem/login/student" class="btn btn-primary">Login as Student</a>
                 </div>
             </div>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Instructor</h5>
-                    <p class="card-text">Choose this option if you are an instructor. Create and manage quizzes for your students.</p>
+                    <p class="card-text">Choose this option if you are an instructor. Create and manage quizzes for your
+                        students.</p>
                     <a href="/quizsystem/login/instructor" class="btn btn-primary">Login as Instructor</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

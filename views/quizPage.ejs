@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Step 1: Create Quiz Form -->
+    <div class="form-container" id="createQuizForm">
+        <form id="quizForm" action="/create-quiz-endpoint" method="post">
+            <!-- Add quiz fields here -->
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+
+            <label for="timeLimit">Time Limit:</label>
+            <input type="text" id="timeLimit" name="timeLimit" required>
+
+            <button type="button" onclick="nextStep('createQuizForm', 'addQuestionsForm')">Next</button>
+        </form>
+    </div>
+
+    <!-- Step 2: Add Questions Form -->
+    <div class="form-container" style="display: none;" id="addQuestionsForm">
+        <form id="questionsForm" action="/add-questions-endpoint" method="post">
+            <!-- Hidden input to store QuizId from the previous form -->
+            <input type="hidden" id="quizId" name="quizId">
+
+            <!-- Hidden input to store InstructorID from the previous form -->
+            <input type="hidden" id="instructorId" name="instructorId">
+
+            <!-- Add question fields here -->
+            <label for="questionText">Question Text:</label>
+            <input type="text" id="questionText" name="questionText" required>
+
+            <label for="correctAnswer">Correct Answer:</label>
+            <input type="text" id="correctAnswer" name="correctAnswer" required>
+
+            <!-- Instructor ID will be filled automatically from the previous form -->
+
+            <button type="button" onclick="nextStep('addQuestionsForm', 'displayQuizTable')">Next</button>
+        </form>
+    </div>
+
+
+    <!-- Step 3: Display Quiz Table -->
+    <div class="form-container" style="display: none;" id="displayQuizTable">
+        <h2>Quiz Information</h2>
+        <!-- Display quiz information in a table -->
+        <table id="quizTable">
+            <thead>
+                <tr>
+                    <th>Instructor ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Time Limit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Display quiz information rows here -->
+            </tbody>
+        </table>
+    </div>
+
+
+
+</body>
+<script>
+    function nextStep(currentFormId, nextFormId) {
+        const currentForm = document.getElementById(currentFormId);
+        const nextForm = document.getElementById(nextFormId);
+
+        // Check validity for the individual form elements
+        const formElements = currentForm.elements;
+        let isValid = true;
+
+        for (let i = 0; i < formElements.length; i++) {
+            if (!formElements[i].checkValidity()) {
+                isValid = false;
+                break;
+            }
+        }
+
+        if (isValid) {
+            // Set the QuizId and InstructorId in the hidden inputs
+            const quizIdInput = nextForm.querySelector('#quizId');
+            quizIdInput.value = formElements['quizId'].value;
+
+            const instructorIdInput = nextForm.querySelector('#instructorId');
+            instructorIdInput.value = formElements['instructorId'].value;
+
+            currentForm.style.display = 'none';
+            nextForm.style.display = 'block';
+        } else {
+            alert('Please fill out all fields.');
+        }
+    }
+</script>
+
+</html>

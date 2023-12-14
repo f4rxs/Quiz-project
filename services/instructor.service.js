@@ -1,5 +1,7 @@
 const { query } = require('../database/db');
+const { generateToken } = require("../authentication/authn");
 const bcrypt = require('bcrypt');
+
 /**
  * Register a new instructor.
  * @param {string} username - The username of the new instructor.
@@ -22,7 +24,11 @@ const registerInstructor = async (username, email, password) => {
       // If no existing instructor found, proceed to insert the new instructor
       let sql = `INSERT INTO Instructor (username, email, password) VALUES (?, ?, ?)`;
       const result = await query(sql, [username, email, password]);
-      return result;
+
+      const instructorID = result.insertId;
+
+      const token = generateToken(instructorID);
+      return { result, token };
     }
   } catch (error) {
     throw new Error(error);
@@ -32,7 +38,7 @@ const registerInstructor = async (username, email, password) => {
 const getInstructorByEmail = async (email) => {
   try {
     const sql = 'SELECT * FROM instructor WHERE Email=?';
-    const result = await query(sql,[email]);
+    const result = await query(sql, [email]);
 
 
     return result;
@@ -42,28 +48,22 @@ const getInstructorByEmail = async (email) => {
 
   }
 }
+
 const instructorLoginService = async (email, password) => {
   try {
     const instructor = await getInstructorByEmail(email);
 
-
-    if (instructor.length > 0) {
+    if (instructor && instructor.length > 0) {
       const storedPassword = instructor[0].Password;
 
-
-      // Compare the entered password with the stored password
       if (password === storedPassword) {
-        // Passwords match, return instructor details (excluding the password)
         const { Password, ...instructorDetails } = instructor[0];
-        return instructorDetails;
+
+        return { instructorDetails };
       } else {
-        // Incorrect password
-        console.log('Incorrect password');
         throw new Error('Incorrect password');
       }
     } else {
-      // No instructor found with the specified email
-      console.log('Instructor not found');
       throw new Error('Instructor not found');
     }
   } catch (error) {
@@ -71,7 +71,6 @@ const instructorLoginService = async (email, password) => {
     throw new Error(`Login failed: ${error.message}`);
   }
 };
-
 
 
 /**

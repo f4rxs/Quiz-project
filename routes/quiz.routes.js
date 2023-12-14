@@ -27,6 +27,12 @@ router.delete("/quiz/:QuizID",deleteQuizByIdController);
 
 
 
+// render routes
+
+router.get('/create-quiz',(req,res)=>{
+res.render('quizPage');
+})
+
 module.exports=router;
 
 

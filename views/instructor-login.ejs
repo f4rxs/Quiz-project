@@ -12,9 +12,28 @@
     <!-- Include any additional stylesheets or scripts you may need -->
     <style>
         body {
-            background: linear-gradient(to right, #3498db, #6c5ce7);
-            color: #fff;
-            font-family: 'Arial', sans-serif;
+            background-image: url(https://e0.pxfuel.com/wallpapers/149/259/desktop-wallpaper-web-development.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #ffffff;
         }
 
         .container {
@@ -25,7 +44,6 @@
             margin-top: 50px;
         }
 
-        h1,
         label {
             color: #000;
         }
@@ -37,15 +55,40 @@
         }
 
         .btn-primary {
-            background-color: #6c5ce7;
-            border-color: #6c5ce7;
+            background-color: #303035;
+            border-color: #1b1a1a;
             border-radius: 5px;
         }
 
-        .btn-primary:hover {
-            background-color: #4a3cc4;
-            border-color: #4a3cc4;
+        .form-group {
+            margin-bottom: 20px;
         }
+
+        .form-group label {
+            color: #fff;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .btn-primary {
+            background-color: #1b1a1a;
+            border-radius: 5px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #04030c;
+            border-color: #65646d;
+        }
+
+
 
         .signup-link {
             display: block;
@@ -53,31 +96,212 @@
             margin-top: 20px;
             color: #000;
         }
+
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: transparent;
+            box-shadow: 0 0 30px rgba(51, 54, 54, 0.1);
+            font-family: 'Times, Times New Roman, serif';
+            color: #cac8a8;
+            font-size: 16px;
+            line-height: 1.5;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            /* Add other styles as needed */
+        }
+
+
+
+
+        .navbar {
+            background-color: #020b14;
+            border-bottom: 4px solid #899b9e;
+        }
+
+        .navbar-brand {
+            color: #cac8a8;
+            font-size: 24px;
+            font-family: 'Comic Sans MS, Comic Sans, cursive';
+
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            font-size: 18px;
+            margin-right: 10px;
+            /* Adjust spacing between nav items */
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #17a2b8;
+            /* Change color on hover */
+        }
+
+        .navbar-toggler-icon {
+            background-color: #1b1a1a;
+            /* Add other styles as needed */
+            border-radius: 4px;
+            /* Optional: Adds rounded corners */
+            padding: 2px;
+            /* Optional: Adds padding to the icon */
+            color: #fff;
+            /* Optional: Sets the icon color */
+        }
+
+        .btn-outline-success {
+            color: #e5f0e7;
+            /* Set the text color */
+            background-color: transparent;
+            /* Set the background color to transparent */
+            border-color: #020b14;
+            /* Set the border color */
+            /* Add other styles as needed */
+            padding: 10px 20px;
+            /* Add padding to the button */
+            border-radius: 4px;
+            /* Optional: Adds rounded corners to the button */
+            font-size: 16px;
+            /* Optional: Sets the font size of the button text */
+        }
+
+        .btn-outline-success:hover {
+            color: #fff;
+            /* Change text color on hover */
+            background-color: #b0c9b6;
+            /* Change background color on hover */
+            /* Add other hover styles as needed */
+        }
+
+
+
+        #animatedMessage {
+
+            opacity: 0;
+            animation: fadeInOut 3s infinite;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #cac8a8;
+            font-size: 30px;
+            font-family: 'Comic Sans MS, Comic Sans, cursive ';
+            animation: fadeInUp 1s ease-out;
+            /* Add animation */
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar-text {
+            color: #899b9e;
+        }
+
+        .shake:hover {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25%,
+            75% {
+                transform: translateX(-10px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+        }
     </style>
 </head>
 
-<body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Instructor Login</h1>
 
+<!-- nav bar -->
+
+<body>
+
+
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand">Quiz System </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
+                    </li>
+                    <a id="animatedMessage" class="navbar-text" href="/quizsystem/sign/instructor">New instructor? Click
+                        here!</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+
+
+
+
+        <h1 class="text-center mb-4">Instructor Login</h1>
         <form action="/quizsystem/instructor-login" method="post" class="mt-4">
             <div class="form-group">
                 <label for="Email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control" required>
+                <input type="email" id="email" name="email"
+                    class="form-control <%= instructor.errorMessage ? 'shake' : '' %>" required>
             </div>
             <div class="form-group">
                 <label for="Password">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" required>
+                <input type="password" id="password" name="password"
+                    class="form-control <%= instructor.errorMessage ? 'shake' : '' %>" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <% if (instructor.errorMessage) { %>
+                <div class="text-danger mb-2">
+                    <%= instructor.errorMessage %>
+                </div>
+                <% } %>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
 
-        <a href="/quizsystem/sign/instructor" class="signup-link">Don't have an account? Sign up here</a>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
 </body>
+
 
 </html>

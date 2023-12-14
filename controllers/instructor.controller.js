@@ -10,6 +10,8 @@ const { validateRegisterInstructor,
   validateUpdatePassword } = require('../validaters/instructorValidator');
 const { message } = require('statuses');
 
+const { generateToken } = require('../authentication/authn');
+
 /**
  * Controller for registering a new instructor.
  *
@@ -83,7 +85,8 @@ const deleteInstructorByIdController = async (req, res) => {
     const result = await deleteInstructorById(id);
 
     if (result.affectedRows === 1) {
-      res.status(200).json({ message: 'Instructor deleted successfully' });
+      // res.status(200).json({ message: 'Instructor deleted successfully' });
+      res.redirect('/quizsystem/login/instructor');
     } else {
       res.status(404).json({ message: `Invalid ID ${id}  - Instructor is not found ` });
     }
@@ -293,18 +296,22 @@ const getInstructorByEmailController = async (req, res) => {
 
 const instructorLoginController = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const instructorDetails = await instructorLoginService(email, password);
     if (instructorDetails) {
-      res.render("instructorPage");
-      // res.status(200).json(instructorDetails);
+      const token = generateToken({ userId: instructorDetails.instructorDetails.InstructorID, role: 'instructor' });
+      res.cookie('authToken', token, { httpOnly: true });
+
+      // res.status(200).json({token,instructorDetails});
+      res.render('instructorPage', { instructorDetails,token});
     } else {
-      res.status(401).json({ message: 'Authentication failed' });
+      const errorMessage = 'Invalid email or password';
+      res.render('instructor-login', { instructor: { errorMessage } });
     }
   } catch (error) {
     console.error(`Instructor login failed: ${error.message}`);
-    res.status(401).json({ message: 'Login failed', error: error.message });
+    const errorMessage = 'Invalid email or password';
+    res.render('instructor-login', { instructor: { errorMessage } });
   }
 };
 

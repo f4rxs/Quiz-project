@@ -8,6 +8,8 @@ const { registerStudent,
 const { validateRegisterStudent,
     validateUpdateStudent } = require('../validaters/student.validator');
 
+const { generateToken } = require('../authentication/authn');
+
 /**
  * Get a student by ID.
  *
@@ -211,7 +213,9 @@ const updateStudentByIdController = async (req, res) => {
         }
 
         if (result.affectedRows > 0) {
-            res.render('getStudents', { studentID: studentID }, { message: 'Student updated successfully.' });
+            // res.render('getStudents', { studentID: studentID }, { message: 'Student updated successfully.' });
+            res.redirect('/quizsystem/students');
+
             // res.status(200).json({ message: 'Student updated successfully.' });
         } else {
             res.status(404).json({ message: `Student with ID ${studentID} not found.` });
@@ -276,25 +280,23 @@ const changeStudentPasswordController = async (req, res) => {
 
 
 const getAllStudentsController = async (req, res) => {
-
+  
     try {
-        const students = await getAllStudents();
-        if (students.length > 0) {
-            res.render('getStudents', { students });
+            const students = await getAllStudents();
+            if (students.length > 0) {
 
-            // res.status(200).json(students);
-
-        } else {
-            res.status(404).json({ message: 'No students found' });
-
-        }
-
-
+                res.render('getStudents', { students });
+            } else {
+                res.status(404).json({ message: 'No students found' });
+            }
+        
     } catch (error) {
-        console.error("an erro occured in getAllstudentsController", error);
-        res.status(500).json({ message: 'an error occured while fetching for the students' });
+        console.error("An error occurred in getAllStudentsController", error);
+        res.status(500).json({ message: 'An error occurred while fetching students' });
     }
-}
+};
+
+
 
 const getStudentByEmailController = async (req, res) => {
     const { email } = req.params;

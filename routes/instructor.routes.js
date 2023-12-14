@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const { validateRegisterInstructor,
@@ -11,14 +12,15 @@ const { registerInstructorController,
     updateInstructorByIDController,
     getAllInstructorsUsernamesController,
     getInstructorByIdController,
-    changePasswordController, getInstructorByEmailController,instructorLoginController }
+    changePasswordController, getInstructorByEmailController, instructorLoginController }
     = require('../controllers/instructor.controller');
 
-
+const authMiddleware = require('../authentication/middleWare');
 
 
 // delete route
 router.delete('/instruct/:id', deleteInstructorByIdController);
+router.get('/instructor-delete/:id', deleteInstructorByIdController);
 
 // put routes
 router.put('/instruct/:id', validateUpdateInstructor(), updateInstructorByIDController);
@@ -38,17 +40,24 @@ router.get('/instruct-email/:email', getInstructorByEmailController);
 
 // render routes 
 router.get('/login/instructor', (req, res) => {
-    res.render('instructor-login');
+    res.render('instructor-login', { instructor: { errorMessage: null } });
 });
+
 router.get('/sign/instructor', (req, res) => {
     res.render('instructor-signup');
 });
-router.get('/instructor-page',(req,res)=>{
-    res.render('instructorPage');
+router.get('/instructor-page', authMiddleware, (req, res) => {
+    const instructor = req.user;
+    res.render('instructorPage', { instructor });
 });
-router.get('/instructor/students',(res,req)=>{
-    res.render('getStudents');
+
+router.get('/instructor/students', authMiddleware, (req, res) => {
+    res.redirect('/students');
 });
+
+router.post('/update-instructor/:id', updateInstructorByIDController,(req, res) => {
+});
+
 
 
 module.exports = router;
