@@ -1,0 +1,129 @@
+<!-- instructor-quizzes.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Quizzes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #d1c626;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            color:rgb(27, 25, 25);
+            background-color: #007bff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Instructor quizzes</h1>
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Quiz ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Time Limit (min)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (const quiz of quizzes) { %>
+                <tr>
+                    <td>
+                        <%= quiz.QuizID %>
+                    </td>
+                    <td>
+                        <a href="/quizsystem/quiz/questions/<%= quiz.QuizID %>"
+                            style="text-decoration: underline; color: #007bff;">
+                            <%= quiz.Title %>
+                        </a>
+                    </td>
+                    <td>
+                        <%= quiz.Description %>
+                    </td>
+                    <td>
+                        <%= quiz.TimeLimit %>
+                    </td>
+                    <td class="btn-container">
+                        <form class="btn-delete" action="/quizsystem/delete-quiz/<%= quiz.QuizID %>" method="GET">
+                            <button type="submit" class="btn">Delete</button>
+                        </form>
+
+                        <form class="btn-update" data-toggle="modal" data-target="#updateQuizModal">
+                            <button type="submit" class="btn">Update</button>
+                        </form>
+
+                        <form class="btn-question" action="/quizsystem/create-question" method="get">
+                            <input type="hidden" name="QuizID" value="<%= quiz.QuizID %>">
+                            <button type="submit" class="btn">Add question</button>
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+
+ 
+
+</body>
+
+</html>

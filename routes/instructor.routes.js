@@ -58,6 +58,20 @@ router.get('/instructor/students', authMiddleware, (req, res) => {
 router.post('/update-instructor/:id', updateInstructorByIDController,(req, res) => {
 });
 
+router.post('/update-instructor/pass/:id',changePasswordController,(req,res)=>{    
+});
+
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/quizsystem/login/instructor');
+    });
+});
+
 
 
 module.exports = router;

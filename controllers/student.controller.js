@@ -280,16 +280,16 @@ const changeStudentPasswordController = async (req, res) => {
 
 
 const getAllStudentsController = async (req, res) => {
-  
-    try {
-            const students = await getAllStudents();
-            if (students.length > 0) {
 
-                res.render('getStudents', { students });
-            } else {
-                res.status(404).json({ message: 'No students found' });
-            }
-        
+    try {
+        const students = await getAllStudents();
+        if (students.length > 0) {
+
+            res.render('getStudents', { students });
+        } else {
+            res.status(404).json({ message: 'No students found' });
+        }
+
     } catch (error) {
         console.error("An error occurred in getAllStudentsController", error);
         res.status(500).json({ message: 'An error occurred while fetching students' });
@@ -325,7 +325,9 @@ const studentLoginController = async (req, res) => {
             res.render("studentPage");
             // res.status(200).json(studentDetails);
         } else {
-            res.status(401).json({ message: 'Authentication failed' });
+            const errorMessage = 'Invalid email or password';
+            res.render("studentPage", { student: { errorMessage } });
+            // res.status(401).json({ message: 'Login failed' });
         }
     } catch (error) {
         console.error(`student login failed: ${error.message}`);

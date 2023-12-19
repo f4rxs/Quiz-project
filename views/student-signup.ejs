@@ -1,83 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Instructor Sign Up</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-            body {
-            background: linear-gradient(to right, #3498db, #6c5ce7);
-            color: #fff;
-            font-family: 'Arial', sans-serif;
+        body {
+            background-image: url(https://e0.pxfuel.com/wallpapers/149/259/desktop-wallpaper-web-development.jpg);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
-        .container {
-            background-color: rgba(52, 152, 219, 0.9);
+        .card-container {
+            background-color: transparent;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin-top: 50px;
         }
 
-        h1 {
+        label {
             color: #000;
         }
 
         form {
             max-width: 400px;
             margin: 0 auto;
-        }
-
-        label {
-            color: #000;
+            margin-top: 20px;
         }
 
         .btn-primary {
-            background-color: #6c5ce7;
-            border-color: #6c5ce7;
+            background-color: #1b1a1a;
             border-radius: 5px;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .btn-primary:hover {
-            background-color: #4a3cc4;
-            border-color: #4a3cc4;
+            background-color: #04030c;
+            border-color: #65646d;
         }
 
-        .login-link {
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            color: #fff;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            color: #000;
+        }
+
+        .signup-link {
             display: block;
             text-align: center;
             margin-top: 20px;
             color: #000;
         }
+
+        .navbar {
+            background-color: #020b14;
+            border-bottom: 4px solid #899b9e;
+        }
+
+        .navbar-brand {
+            color: #cac8a8;
+            font-size: 24px;
+            font-family: 'Comic Sans MS, Comic Sans, cursive';
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #17a2b8;
+        }
+
+        .navbar-toggler-icon {
+            background-color: #1b1a1a;
+            border-radius: 4px;
+            padding: 2px;
+            color: #fff;
+        }
+
+        .nav-item {
+            margin-right: 15px;
+        }
+
+        .nav-item .bi-instagram {
+            color: #39acc0;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .nav-item .bi-facebook {
+            color: #39acc0;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .nav-item .bi-google {
+            color: #39acc0;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .nav-item:hover .bi-instagram {
+            color: #d41f1f;
+        }
+
+        .nav-item:hover .bi-facebook {
+            color: blue;
+        }
+
+        .nav-item:hover .bi-google {
+            color: rgb(187, 187, 59);
+        }
+
+        h1 {
+            color: #cac8a8;
+            font-size: 30px;
+            font-family: 'Comic Sans MS, Comic Sans, cursive ';
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container mt-5">
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <div class="navbar-brand">Quiz System </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <%- include('partials/social') %>
+    </nav>
+
+    <!-- Class: card-container -->
+    <div class="card-container">
         <h1 class="text-center mb-4">Student Sign Up</h1>
-        
+
         <form method="POST" action="/quizsystem/student">
             <div class="form-group">
-              <label for="Username">First Name</label>
-              <input type="text" class="form-control" id="username" name="username" required>
+                <label for="Username">First Name</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required>
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
-              <label for="password">password</label>
-              <input type="text" class="form-control" id="password" name="password" required>
+                <label for="password">password</label>
+                <input type="text" class="form-control" id="password" name="password" required>
+                
             </div>
             <button type="submit" class="btn btn-primary">Sign Up</button>
-          </form>
+        </form>
 
-        <a href="/quizsystem/login/student" class="login-link">Already have an account? Log in here</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    
 </body>
+
 </html>

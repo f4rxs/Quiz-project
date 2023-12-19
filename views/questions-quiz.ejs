@@ -1,0 +1,110 @@
+<!-- questions.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Questions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #dbd5d5;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #d1c626;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            color:rgb(27, 25, 25);
+            background-color: #007bff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Questions for Quiz <%= quizID %></h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Question ID</th>
+                <th>Question Text</th>
+                <th>Correct Answer</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (const question of questtions) { %>
+                <tr>
+                    <td><%= question.QuestionID %></td>
+                    <td><%= question.QuestionText %></td>
+                    <td><%= question.CorrectAnswer %></td>
+                    <td class="btn-container">
+                        <form class="btn-delete" action="/quizsystem/delete-question/<%= question.QuestionID %>" method="GET">
+                            <button class="btn" type="submit">Delete</button>
+                        </form>
+                        <form class="btn-update" action="/quizsystem/update-question/<%= question.QuestionID %>" method="POST">
+                            <button class="btn" type="submit" data-toggle="modal" data-target="#updateQuizModal">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+</body>
+
+</html>

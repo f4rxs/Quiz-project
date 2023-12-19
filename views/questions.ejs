@@ -1,16 +1,14 @@
-<!-- createQuiz.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Quiz</title>
+    <title>Add Question</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-           background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
+            background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
             margin: 0;
             padding: 0;
             display: flex;
@@ -38,8 +36,8 @@
             color: #555;
         }
 
-        input[type="text"],
         textarea,
+        input[type="text"],
         input[type="number"] {
             width: 100%;
             padding: 10px;
@@ -55,8 +53,7 @@
             display: none;
         }
 
-        .button-link {
-            display: block;
+        button {
             width: 100%;
             padding: 10px;
             background-color: #d1c626;
@@ -69,30 +66,29 @@
             cursor: pointer;
         }
 
-        .button-link:hover {
+        button:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 
 <body>
-    <form action="/quizsystem/quiz" method="post">
-        <h1>Create Quiz</h1>
+    <form action="/quizsystem/question" method="post">
+        <h1>Add Question</h1>
 
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
+        <label for="questionText">Question Text:</label>
+        <textarea id="questionText" name="QuestionText" required></textarea>
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
+        <label for="correctAnswer">Correct Answer:</label>
+        <input type="text" id="correctAnswer" name="CorrectAnswer" required>
 
-        <label for="timeLimit">Time Limit (minutes):</label>
-        <input type="number" id="timeLimit" name="timeLimit" required>
+        <label for="quizID">Quiz ID:</label>
+        <input type="text" id="quizID" name="QuizId" value="<%= quizID %>" readonly>
 
-        <input type="hidden" name="instructorID" value="<%= instructorID %>">
+        <input type="hidden" name="InstructorID" value="<%= instructorID %>">
 
-        <button type="submit" class="button-link">Create Quiz</button>
+        <button type="submit">Add Question</button>
     </form>
-
 </body>
 
 </html>

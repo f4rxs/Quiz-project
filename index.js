@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const cors = require('cors');
 const app = express();
 const path = require('path');
@@ -12,6 +13,14 @@ const question = require('./routes/question.routes');
 const student = require('./routes/student.routes');
 const choices = require('./routes/choices.routes');
 const result = require('./routes/result.routes');
+
+
+
+app.use(session({
+  secret: '123456789103355',
+  resave: false,
+  saveUninitialized: true
+}));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

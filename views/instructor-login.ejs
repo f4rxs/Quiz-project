@@ -18,22 +18,39 @@
             background-attachment: fixed;
         }
 
-
-
         .navbar {
             background-color: #343a40;
         }
 
-        .navbar-dark .navbar-brand {
-            color: #ffffff;
-        }
-
-        .navbar-dark .navbar-nav .nav-link {
-            color: #ffffff;
-        }
-
+        .navbar-dark .navbar-brand,
+        .navbar-dark .navbar-nav .nav-link,
         .navbar-dark .navbar-toggler-icon {
-            background-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .nav-item {
+            margin-right: 15px;
+        }
+
+        .nav-item .bi-instagram,
+        .nav-item .bi-facebook,
+        .nav-item .bi-google {
+            color: #39acc0;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+
+        .nav-item:hover .bi-instagram {
+            color: #d41f1f;
+        }
+
+        .nav-item:hover .bi-facebook {
+            color: blue;
+        }
+
+        .nav-item:hover .bi-google {
+            color: rgb(187, 187, 59);
         }
 
         .container {
@@ -79,7 +96,9 @@
 
         .btn-primary {
             background-color: #1b1a1a;
-            border-radius: 5px;
+            border-radius: 10px;
+            position: relative;
+            margin-top: 5%;
             transition: background-color 0.3s, border-color 0.3s;
         }
 
@@ -87,8 +106,6 @@
             background-color: #04030c;
             border-color: #65646d;
         }
-
-
 
         .signup-link {
             display: block;
@@ -109,11 +126,7 @@
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            /* Add other styles as needed */
         }
-
-
-
 
         .navbar {
             background-color: #020b14;
@@ -124,60 +137,40 @@
             color: #cac8a8;
             font-size: 24px;
             font-family: 'Comic Sans MS, Comic Sans, cursive';
-
         }
 
         .navbar-nav .nav-link {
             color: #ffffff;
             font-size: 18px;
             margin-right: 10px;
-            /* Adjust spacing between nav items */
         }
 
         .navbar-nav .nav-link:hover {
             color: #17a2b8;
-            /* Change color on hover */
         }
 
         .navbar-toggler-icon {
             background-color: #1b1a1a;
-            /* Add other styles as needed */
             border-radius: 4px;
-            /* Optional: Adds rounded corners */
             padding: 2px;
-            /* Optional: Adds padding to the icon */
             color: #fff;
-            /* Optional: Sets the icon color */
         }
 
         .btn-outline-success {
             color: #e5f0e7;
-            /* Set the text color */
             background-color: transparent;
-            /* Set the background color to transparent */
             border-color: #020b14;
-            /* Set the border color */
-            /* Add other styles as needed */
             padding: 10px 20px;
-            /* Add padding to the button */
             border-radius: 4px;
-            /* Optional: Adds rounded corners to the button */
             font-size: 16px;
-            /* Optional: Sets the font size of the button text */
         }
 
         .btn-outline-success:hover {
             color: #fff;
-            /* Change text color on hover */
             background-color: #b0c9b6;
-            /* Change background color on hover */
-            /* Add other hover styles as needed */
         }
 
-
-
         #animatedMessage {
-
             opacity: 0;
             animation: fadeInOut 3s infinite;
             cursor: pointer;
@@ -201,7 +194,6 @@
             font-size: 30px;
             font-family: 'Comic Sans MS, Comic Sans, cursive ';
             animation: fadeInUp 1s ease-out;
-            /* Add animation */
         }
 
         @keyframes fadeInUp {
@@ -244,7 +236,7 @@
 </head>
 
 
-<!-- nav bar -->
+
 
 <body>
 
@@ -252,7 +244,7 @@
 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand">Quiz System </a>
+            <div class="navbar-brand">Quiz System </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -267,38 +259,42 @@
                         here!</a>
             </div>
         </div>
+        <%- include('partials/social') %>
     </nav>
 
+
+
     <div class="container mt-5">
-
-
-
-
         <h1 class="text-center mb-4">Instructor Login</h1>
         <form action="/quizsystem/instructor-login" method="post" class="mt-4">
             <div class="form-group">
                 <label for="Email">Email:</label>
-                <input type="email" id="email" name="email"
-                    class="form-control <%= instructor.errorMessage ? 'shake' : '' %>" required>
-            </div>
-            <div class="form-group">
-                <label for="Password">Password:</label>
-                <input type="password" id="password" name="password"
-                    class="form-control <%= instructor.errorMessage ? 'shake' : '' %>" required>
-            </div>
-            <% if (instructor.errorMessage) { %>
-                <div class="text-danger mb-2">
-                    <%= instructor.errorMessage %>
+                <input type="email" id="email" name="email" class="form-control ">
+
+                <div class="form-group">
+                    <label for="Password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control ">
+
+                    <% if (instructor.errorMessage) { %>
+                        <%= instructor.errorMessage %>
+                            <% } %>
                 </div>
-                <% } %>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+
+
+            </div> <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
 
 
+    </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+
 
 
 </body>

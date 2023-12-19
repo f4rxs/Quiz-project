@@ -42,6 +42,7 @@ const createQuizController = async (req, res) => {
 
         // Check the affected rows to determine the success of quiz creation
         if (result.affectedRows === 1) {
+            req.session.quizID = result.insertId;
             res.status(200).json({ message: 'Quiz created successfully' });
         } else {
             res.status(500).json({ message: 'Quiz creation failed' });
@@ -127,7 +128,7 @@ const getQuizzesByInstructorIDController = async (req, res) => {
 
         // Check if quizzes were found
         if (quizzes.length > 0) {
-            res.status(200).json(quizzes);
+            res.render('instructor-quizzes', { quizzes });
         } else {
             // If no quizzes were found, return a 404 Not Found response
             res.status(404).json({ message: `No quizzes found for this instructor with the id ${instructorID}` });
@@ -192,12 +193,13 @@ const deleteQuizByIdController = async (req, res) => {
     try {
         // Call the deleteQuizById function to delete the quiz from the database
         const result = await deleteQuizById(QuizID);
-
+        const instructorID=req.session;
         // Check if no rows were affected, indicating no quiz was found with the given ID
         if (result.affectedRows === 0) {
             res.status(404).json({ message: `No quiz found with the provided ID->${QuizID} ` });
         } else {
             // If at least one row was affected, the quiz was deleted successfully
+            // res.redirect('/quizsystem/my-quizzes/:instructorID');
             res.status(200).json({ message: 'Quiz deleted successfully' });
         }
     } catch (error) {
@@ -222,8 +224,8 @@ const getQuestionsForQuizController = async (req, res) => {
 
         // Check if questions were found
         if (questtions.length > 0) {
-            res.status(200).json({ questtions });
-
+            res.render('questions-quiz', { questtions, quizID: QuizID });
+            // res.status(200).json({ questtions });
         }
         else {
             // No questions found for the given Quiz ID

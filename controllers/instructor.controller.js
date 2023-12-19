@@ -135,17 +135,19 @@ const updateInstructorByIDController = async (req, res) => {
       password,
     };
     // Call the service function to update the instructor
-    const result = await updateInstructorByID(id, updatedInstructor);
+    const instructorDetails = await updateInstructorByID(id, updatedInstructor);
 
-    // Check the result and send the appropriate response
-    if (result.error) {
-      return res.status(400).json({ message: result.error });
+    // Check the instructorDetails and send the appropriate response
+    if (instructorDetails.error) {
+      return res.render('instructorPage', { error: instructorDetails.error });
     }
 
-    if (result.affectedRows === 1) {
-      res.status(200).json({ message: 'Instructor updated successfully' });
+    if (instructorDetails.affectedRows === 1) {
+
+      res.redirect('/quizsystem/login/instructor');
+      // res.status(200).json({ message: 'Instructor updated successfully' });
     } else {
-      res.status(404).json({ message: `Invalid ID ${id} - Instructor is not available to update` });
+      // return res.render('instructorPage', { error: `Invalid ID ${id} - Instructor is not available to update` });
     }
   } catch (error) {
     // Log the error and send a 500 Internal Server Error response with an error message
@@ -296,14 +298,23 @@ const getInstructorByEmailController = async (req, res) => {
 
 const instructorLoginController = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const instructorDetails = await instructorLoginService(email, password);
+
     if (instructorDetails) {
       const token = generateToken({ userId: instructorDetails.instructorDetails.InstructorID, role: 'instructor' });
-      res.cookie('authToken', token, { httpOnly: true });
 
-      // res.status(200).json({token,instructorDetails});
-      res.render('instructorPage', { instructorDetails,token});
+      req.session.instructorID = instructorDetails.instructorDetails.InstructorID;
+
+      req.session.save(err => {
+        if (err) {
+          console.error(`Error saving session: ${err.message}`);
+          return res.status(500).send('Internal Server Error');
+        }
+
+        res.render('instructorPage', { instructorDetails, token });
+      });
     } else {
       const errorMessage = 'Invalid email or password';
       res.render('instructor-login', { instructor: { errorMessage } });
@@ -314,6 +325,7 @@ const instructorLoginController = async (req, res) => {
     res.render('instructor-login', { instructor: { errorMessage } });
   }
 };
+
 
 
 // Export the controller function for use in routes

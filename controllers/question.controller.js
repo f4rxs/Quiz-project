@@ -98,6 +98,7 @@ const deleteQuestionController = async (req, res) => {
     // Check the result of the deletion operation and respond accordingly.
     if (result.affectedRows === 1) {
       // If a question is deleted successfully, respond with a 200 OK status and a success message.
+      //  res.render('instructor-quizzes');
       res.status(200).json({ message: 'Question deleted successfully' });
     } else {
       // If the provided questionId is invalid or the question is not available, respond with a 404 Not Found status and an error message.

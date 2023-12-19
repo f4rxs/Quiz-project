@@ -93,6 +93,52 @@
             border-color: #b6c3d1;
             color: #fff;
         }
+
+        #settingsModal {
+            background: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent black background */
+        }
+
+        #settingsModalLabel {
+            color: #f0f0f0;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            /* White background for modal content */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Shadow for a subtle lift effect */
+        }
+
+        .modal-header {
+            background-color: #455769;
+            border-color: #007bff;
+            color: #fff;
+            border-bottom: 1px solid #80abd6;
+            border-radius: 10px 10px 0 0;
+            padding: 15px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+
+        }
+
+        .close {
+            color: #fff;
+            
+            opacity: 1;
+           
+        }
+
+        .close:hover {
+            color: #f70808;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
     </style>
 </head>
 
@@ -111,26 +157,31 @@
                     <a class="nav-link" href="/quizsystem/students">Display All Students</a>
                 </li>
 
-                <!-- Add a dropdown menu with options -->
+                <li class="nav-item active">
+                    <a class="nav-link"
+                        href="/quizsystem/my-quizzes/<%= instructorDetails.instructorDetails.InstructorID %>">View
+                        Quizzes</a>
+                </li>
+
+                <!--  dropdown menu  -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         Instructor Menu
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <!-- Add profile image and other options -->
-                        <a class="dropdown-item" href="#">Profile</a>
+
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#settingsModal">Settings</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="/quizsystem/logout">Logout</a>
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <h1 id="welcome-message" class="text-center mb-4">Welcome <%=instructorDetails.instructorDetails.Username%>
-    </h1>
+    <h1 id="welcome-message" class="text-center mb-4">Welcome <%=instructorDetails.instructorDetails.Username%></h1>
+
 
     <div class="row text-center">
         <!-- Card 1: Create a Quiz -->
@@ -148,9 +199,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Check Quiz Results</h5>
+                    <h5 class="card-title">View Results</h5>
                     <p class="card-text">View results for a specific quiz.</p>
-                    <a href="#" class="btn btn-primary">Check Results</a>
+                    <a href="" class="btn btn-primary">Add</a>
                 </div>
             </div>
         </div>
@@ -169,9 +220,10 @@
     </div>
 
 
+    <!-- Modal: Settings Modal -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
@@ -179,9 +231,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
+
                     <!-- Delete Account Form -->
-                    <h1>DELETE </h1>
+                    <h1>Delete Account</h1>
                     <form action="/quizsystem/instructor-delete/<%= instructorDetails.instructorDetails.InstructorID %>"
                         method="GET" id="deleteAccountForm">
 
@@ -194,40 +248,50 @@
                     </form>
 
                     <!-- Update Account Form -->
-                    <h1>UPDATE</h1>
+                    <h1>Update Account</h1>
                     <form action="/quizsystem/update-instructor/<%=instructorDetails.instructorDetails.InstructorID %>"
                         method="POST" id="updateAccountForm">
-                      <!-- Replace the placeholders with actual form elements -->
-                      <div class="form-group">
-                          <label for="newName">New Name</label>
-                          <input type="text" class="form-control" id="username" name="username"> <!-- Ensure the name attribute is "username" -->
-                      </div>
-                  
-                      <div class="form-group">
-                          <label for="newEmail">New Email</label>
-                          <input type="email" class="form-control" id="email" name="email"> <!-- Ensure the name attribute is "email" -->
-                      </div>
-                      <div class="form-group">
-                          <label for="newPassword">New Password</label>
-                          <input type="password" class="form-control" id="password" name="password"> <!-- Ensure the name attribute is "password" -->
-                      </div>
-                      <button type="submit" class="btn btn-primary">Update Account</button>
-                  </form>
-                  
 
+                        <div class="form-group">
+                            <label for="newName">New Name</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newEmail">New Email</label>
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Update Account</button>
+                    </form>
 
                     <!-- Change Password Form -->
-                    <form action="/change-password" method="POST" id="changePasswordForm">
-                        <!-- Replace the placeholders with actual form elements -->
+                    <h1>Change Password</h1>
+                    <form
+                        action="/quizsystem/update-instructor/pass/<%=instructorDetails.instructorDetails.InstructorID %>"
+                        method="POST" id="changePasswordForm">
+
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
                             <input type="password" class="form-control" id="newPassword" name="newPassword">
                         </div>
+
                         <button type="submit" class="btn btn-primary">Change Password</button>
                     </form>
+
                 </div>
             </div>
         </div>
+    </div>
+
+    </div>
+    </div>
+    </div>
     </div>
 
 
