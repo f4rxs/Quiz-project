@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Login</title>
+    <title>Student Login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 </head>
@@ -237,48 +237,65 @@
 
 
 
+    <!-- Navigation Bar (Navbar) -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
+            <!-- Navbar Brand -->
             <div class="navbar-brand">Quiz System </div>
+
+            <!-- Navbar Toggler Button (for small screens) -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Collapse Section (contains navigation links) -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar Links (unordered list) -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Home Link -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
                     </li>
-                    <a id="animatedMessage" class="navbar-text" href="/quizsystem/sign/student">New Student? Click
-                        here!</a>
+
+                    <!-- New Student Link -->
+                    <li class="nav-item">
+                        <a id="animatedMessage" class="navbar-text" href="/quizsystem/sign/student">New Student? Click
+                            here!</a>
+                    </li>
+                </ul>
             </div>
         </div>
+
+        <!-- Social Links (included from partials/social) -->
         <%- include('partials/social') %>
     </nav>
 
 
 
+    <!-- Student Login Form -->
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Student login</h1>
+        <!-- Form Heading -->
+        <h1 class="text-center mb-4">Student Login</h1>
+
+        <!-- Login Form -->
         <form action="/quizsystem/student-login" method="post" class="mt-4">
+            <!-- Email Input -->
             <div class="form-group">
                 <label for="Email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control ">
+                <input type="email" id="email" name="email" class="form-control">
+            </div>
 
-                <div class="form-group">
-                    <label for="Password">Password:</label>
-                    <input type="password" id="password" name="password" class="form-control ">
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
 
-                  
-
-                </div>
-
-
-            </div> <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
         </form>
-
-
     </div>
 
 

@@ -17,8 +17,9 @@ const createChoice = async (QuestionID, ChoiceText, IsCorrect) => {
         // SQL query to insert a new choice into the database.
         let sql = 'INSERT INTO choices (QuestionID, ChoiceText, IsCorrect) VALUES (?, ?, ?)';
 
+        const isCorrectValue = IsCorrect.toLowerCase() === 'true' ? 1 : 0;
         // Execute the insert query using a database connection method
-        const result = await query(sql, [QuestionID, ChoiceText, IsCorrect]);
+        const result = await query(sql, [QuestionID, ChoiceText, isCorrectValue]);
 
         // Return the result of the database insert operation, which contains information about the insert.
         return result;
@@ -80,7 +81,46 @@ const deleteChoice = async (choiceID) => {
     }
 };
 
+const getChoicesByQuestionID = async (questionID) => {
+    try {
+        const sql = 'SELECT * FROM choices WHERE QuestionID=?';
+        const result = await query(sql, [questionID]);
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
 
+
+
+const getChoicesByQuizId = async (quizId) => {
+    try {
+        const sql = 'SELECT * FROM choices WHERE QuestionID IN (SELECT QuestionID FROM question WHERE QuizID = ?)';
+        const choices = await query(sql, [quizId]);
+        return choices;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+const getCorrectChoicesOfAQuiz = async (quizId) => {
+    try {
+
+        const sql = `
+      SELECT q.QuestionID ,q.QuestionText , c.ChoiceID , ChoiceText
+      FROM Question q
+      JOIN Choices c ON q.QuestionID = c.QuestionID
+      WHERE q.QuizID = ? AND c.IsCorrect = true;
+    `;
+
+        const correctChoices = await query(sql, [quizId]);
+        return correctChoices;
+
+    } catch (error) {
+        throw new Error(error);
+
+    }
+};
 
 
 /**
@@ -90,5 +130,7 @@ module.exports = {
     createChoice,
     updateChoice,
     deleteChoice,
-
+    getChoicesByQuestionID,
+    getChoicesByQuizId,
+    getCorrectChoicesOfAQuiz
 };

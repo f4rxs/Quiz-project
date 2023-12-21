@@ -38,10 +38,11 @@ const getResultsForStudentController = async (req, res) => {
     try {
         const { StudentID } = req.params;
 
-        const result = await getResultsForStudent(StudentID);
+        const results = await getResultsForStudent(StudentID);
 
-        if (result.length > 0) {
-            res.status(200).json(result);
+        if (results.length > 0) {
+            res.render('student-results', { StudentID, results })
+            // res.status(200).json(result);
 
         } else {
             res.status(404).json({ message: `The student with id ${StudentID} is not found` });
@@ -70,7 +71,8 @@ const getResultsForQuizController = async (req, res) => {
         // Check if results were found for the student
         if (result.length > 0) {
             // Send a success response with the retrieved results
-            res.status(200).json(result);
+            // res.status(200).json(result);
+            res.render('resultForQuiz', { quizID, result });
         } else {
             // Send a not found response if no results were found for the student
             res.status(404).json({ message: `No results found for the specified quiz with id ${quizID}` });
@@ -175,6 +177,4 @@ module.exports = {
     updateResultController,
     deleteResultController,
     calculateOverallScoreForQuizController
-
-
 }

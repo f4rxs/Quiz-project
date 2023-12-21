@@ -35,22 +35,21 @@ const createResult = async (StudentID, QuizID, Score) => {
  */
 const getResultsForStudent = async (StudentID) => {
     try {
-        // SQL query to select results for a specific student from the result table
-        let sql = 'SELECT * FROM result WHERE StudentID=?';
+        const result = await query(
+            'SELECT r.ResultID, s.Username AS StudentName, q.Title AS QuizTitle, q.Description AS QuizDescription, r.Score ' +
+            'FROM Result r ' +
+            'JOIN Student s ON r.StudentID = s.StudentID ' +
+            'JOIN Quiz q ON r.QuizID = q.QuizID ' +
+            'WHERE r.StudentID = ?',
+            [StudentID]
+        );
 
-        // Execute the query and retrieve the result
-        const result = await query(sql, [StudentID]);
-
-        // Return the result of the operation
         return result;
-
-
     } catch (error) {
-        // Handle errors that occurred during the operation
         throw new Error(error);
-
     }
-}
+};
+
 
 /**
  * Retrieves quiz results for a specific quiz.
@@ -60,17 +59,19 @@ const getResultsForStudent = async (StudentID) => {
  */
 const getResultsForQuiz = async (quizID) => {
     try {
-        // SQL query to select results for a specific quiz from the result table
-        const results = await query('SELECT * FROM result WHERE QuizID = ?', [quizID]);
+        const result = await query(
+            'SELECT r.ResultID, s.Username AS StudentName, r.Score ' +
+            'FROM Result r ' +
+            'JOIN Student s ON r.StudentID = s.StudentID ' +
+            'WHERE r.QuizID = ?',
+            [quizID]
+        );
 
-        // Return the result of the operation
-        return results;
+        return result;
     } catch (error) {
-        // Handle errors that occurred during the operation
         throw new Error(error);
     }
 };
-
 
 /**
  * Updates an existing quiz result with new information.
@@ -141,6 +142,52 @@ const calculateOverallScoreForQuiz = async (quizID) => {
     }
 };
 
+
+
+
+// Note ******* There is a logical error here i didnot have enough time to fix , but will work on it.
+const calculateQuizScoreService = async (quizID, selectedChoices, questions) => {
+    try {
+        let score = 0;
+
+        
+        for (const question of questions) {
+            if (question.choices && Array.isArray(question.choices)) {
+
+                let correctChoice;
+
+                for (const choice of question.choices) {
+                    if (choice.IsCorrect === 1) {
+                        correctChoice = choice;
+                        break;
+                    }
+                }
+
+                console.log('Processing Question:', question);
+                console.log('Correct Choice:', correctChoice);
+
+                const selectedChoiceID = selectedChoices[`question${question.QuestionID}`];
+
+                if (selectedChoiceID === correctChoice.ChoiceID) {
+                    score += 1;
+                }
+            }
+        }
+        console.log('Final Score:', score);
+        return score;
+    } catch (error) {
+        throw new Error('Error in calculateQuizScoreService: ', error);
+    }
+};
+
+
+
+
+
+
+
+
+
 // Export the functions for result 
 module.exports = {
     createResult
@@ -148,6 +195,7 @@ module.exports = {
     getResultsForQuiz,
     updateResult,
     deleteResult,
+    calculateQuizScoreService,
     calculateOverallScoreForQuiz
 
 };

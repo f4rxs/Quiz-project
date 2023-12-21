@@ -9,7 +9,7 @@ const { createQuiz,
     updateQuiz,
     deleteQuizById,
     getQuestionsForQuiz,
-    getResultsForQuiz, calculateResualts } = require(`../services/quiz.service`);
+    getQuestionsWithChoicesOfAQuiz } = require(`../services/quiz.service`);
 
 
 
@@ -43,7 +43,8 @@ const createQuizController = async (req, res) => {
         // Check the affected rows to determine the success of quiz creation
         if (result.affectedRows === 1) {
             req.session.quizID = result.insertId;
-            res.status(200).json({ message: 'Quiz created successfully' });
+            res.redirect(`/quizsystem/my-quizzes/${instructorID}`);
+            // res.status(200).json({ message: 'Quiz created successfully' });
         } else {
             res.status(500).json({ message: 'Quiz creation failed' });
         }
@@ -53,6 +54,33 @@ const createQuizController = async (req, res) => {
         res.status(500).json({ message: 'An error occurred during quiz creation' });
     }
 };
+
+/**
+ * Controller for submitting a quiz.
+ * Validates the input, submits the quiz, and redirects to view results.
+ *
+ * @param {Object} req - Express request object.
+ * @param {Object} res - Express response object.
+ */
+const submitQuizController = async (req, res) => {
+    const { studentID, quizID, answers } = req.body;
+
+    try {
+        // Assuming you have a service function to handle quiz submission
+        const result = await submitQuiz(studentID, quizID, answers);
+
+        if (result.success) {
+            // Redirect to the quiz results page after successful submission
+            res.redirect(`/quiz-system/quiz-results/${quizID}`);
+        } else {
+            res.status(400).json({ message: 'Quiz submission failed' });
+        }
+    } catch (error) {
+        console.error('Error in submitQuizController:', error);
+        res.status(500).json({ message: 'An error occurred during quiz submission' });
+    }
+};
+
 
 /**
  * Controller for retrieving a quiz by ID.
@@ -95,7 +123,7 @@ const listQuizzesController = async (req, res) => {
 
         // Check if quizzes were found
         if (quizess.length > 0) {
-            res.status(200).json(quizess);
+            res.render('Quizzes', { quizess });
 
         } else {
             // If no quizzes were found, return a 400 Bad Request response
@@ -193,14 +221,16 @@ const deleteQuizByIdController = async (req, res) => {
     try {
         // Call the deleteQuizById function to delete the quiz from the database
         const result = await deleteQuizById(QuizID);
-        const instructorID=req.session;
+        const instructorID = req.session.instructorID;
         // Check if no rows were affected, indicating no quiz was found with the given ID
         if (result.affectedRows === 0) {
             res.status(404).json({ message: `No quiz found with the provided ID->${QuizID} ` });
+
         } else {
             // If at least one row was affected, the quiz was deleted successfully
-            // res.redirect('/quizsystem/my-quizzes/:instructorID');
-            res.status(200).json({ message: 'Quiz deleted successfully' });
+            res.redirect(`/quizsystem/my-quizzes/${instructorID}`);
+
+            // res.status(200).json({ message: 'Quiz deleted successfully' });
         }
     } catch (error) {
         // Log and send a 500 Internal Server Error response in case of an error
@@ -241,27 +271,29 @@ const getQuestionsForQuizController = async (req, res) => {
 };
 
 
-// // need a fix
-// const getResultsForQuizController = async (req, res) => {
-//     const {QuizID } = req.params;
 
-//     try {
-//         if (QuizID) {  
-//             const results = await getResultsForQuiz(QuizID);
 
-//             if (results.length > 0) {
-//                 res.status(200).json(results);
-//             } else {
-//                 res.status(404).json({ message: 'No results found for the provided QuizID' });
-//             }
-//         } else {
-//             res.status(400).json({ message: 'Invalid or missing QuizID parameter' });
-//         }
-//     } catch (error) {
-//         console.error('Error in getResultsForQuizController: ', error);
-//         res.status(500).json({ message: 'An error occurred while retrieving results' });
-//     }
-// };
+const getQuestionsWithChoicesOfAQuizController = async (req, res) => {
+    try {
+        const { quizID } = req.params;
+
+        // Call the service to get questions with choices for the specified quiz
+        const result = await getQuestionsWithChoicesOfAQuiz(quizID);
+
+        // Check if any data was retrieved
+        if (result.length > 0) {
+            // If data is found, send it as a response
+            res.status(200).json(result);
+        } else {
+            // If no data is found, send a 404 Not Found response
+            res.status(404).json({ message: 'No questions with choices found for the specified quiz' });
+        }
+    } catch (error) {
+        // Log and send a 500 Internal Server Error response in case of an error
+        console.error('An error occurred in getQuestionsWithChoicesOfAQuizController:', error);
+        res.status(500).json({ message: 'An error occurred while fetching questions with choices' });
+    }
+};
 
 
 
@@ -274,6 +306,5 @@ module.exports = {
     updatedQuizController,
     deleteQuizByIdController,
     getQuestionsForQuizController,
-
-
+    getQuestionsWithChoicesOfAQuizController
 }

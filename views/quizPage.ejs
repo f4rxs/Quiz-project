@@ -1,5 +1,3 @@
-<!-- createQuiz.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +8,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-           background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
+            background: url(https://gamethinking.io/wp-content/uploads/sites/5/2018/12/quiz-background.png);
             margin: 0;
             padding: 0;
             display: flex;
@@ -75,24 +73,32 @@
     </style>
 </head>
 
+<!-- HTML Form for Creating a Quiz -->
+
 <body>
     <form action="/quizsystem/quiz" method="post">
+
+        <!-- Form Heading -->
         <h1>Create Quiz</h1>
 
+        <!-- Title Input -->
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" required>
 
+        <!-- Description Textarea -->
         <label for="description">Description:</label>
         <textarea id="description" name="description" required></textarea>
 
+        <!-- Time Limit Input -->
         <label for="timeLimit">Time Limit (minutes):</label>
         <input type="number" id="timeLimit" name="timeLimit" required>
 
+        <!-- Instructor ID Input (Hidden) -->
         <input type="hidden" name="instructorID" value="<%= instructorID %>">
 
+        <!-- Submit Button -->
         <button type="submit" class="button-link">Create Quiz</button>
     </form>
-
 </body>
 
 </html>

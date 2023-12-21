@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Questions</title>
+    <title>Question Choices</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -15,10 +15,10 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            color: #dbd5d5;
         }
 
         h1 {
-            color: #dbd5d5;
             margin-top: 20px;
         }
 
@@ -36,6 +36,7 @@
         td {
             padding: 15px;
             text-align: left;
+            color: #333;
             border-bottom: 1px solid #ddd;
         }
 
@@ -73,69 +74,55 @@
 </head>
 
 <body>
-    <h1>Questions for Quiz <%= quizID %>font-family
-    </h1>
-    <p1 style="color: black; font-weight: bold; ">To check choices of a question click on its title </p1>
+    <h1>Choices of the Question </h1>
 
     <table>
         <!-- Table Header -->
         <thead>
             <tr>
                 <!-- Column Headers -->
-                <th>Question ID</th>
-                <th>Question Text</th>
-                <th>Correct Answer</th>
+                <th>Choice ID</th>
+                <th>Choice Text</th>
+                <th>Is Correct</th>
                 <th>Actions</th>
             </tr>
         </thead>
 
         <!-- Table Body -->
         <tbody>
-            <!-- Loop through each question in the 'questtions' array -->
-            <% for (const question of questtions) { %>
-                <!-- Table Row for Each Question -->
+            <!-- Loop through each choice in the 'choices' array -->
+            <% for (const choice of choices) { %>
+                <!-- Table Row for Each Choice -->
                 <tr>
-                    <!-- Display Question ID -->
+                    <!-- Display Choice ID -->
                     <td>
-                        <%= question.QuestionID %>
+                        <%= choice.ChoiceID %>
                     </td>
-
-                    <!-- Display Question Text -->
+                    <!-- Display Choice Text -->
                     <td>
-                        <a href="/quizsystem/choices/<%= question.QuestionID %>"
-                            style="text-decoration: underline; color: #007bff;">
-                            <%= question.QuestionText %>
-                        </a>
-
+                        <%= choice.ChoiceText %>
                     </td>
-
-
-
-                    <!-- Display Correct Answer -->
+                    <!-- Display Is Correct (convert 1 to true, 0 to false) -->
                     <td>
-                        <%= question.CorrectAnswer %>
+                        <%= choice.IsCorrect===1 ? 'true' : 'false' %>
                     </td>
-
-                    <!-- Actions Column with Buttons -->
                     <td class="btn-container">
                         <!-- Delete Button Form -->
-                        <form class="btn-delete" action="/quizsystem/delete-question/<%= question.QuestionID %>"
+                        <form class="btn-delete" action="/quizsystem/choices-delete/<%= choice.ChoiceID %>"
                             method="GET">
                             <button class="btn" type="submit">Delete</button>
                         </form>
 
-                        <!-- Add Choices Button Form -->
-                        <form class="btn-create" action="/quizsystem/add-choices/<%=question.QuestionID %>" method="GET">
-                            <button class="btn" type="submit">Add Choices</button>
-                        </form>
-
-
                        
+
                     </td>
                 </tr>
+
                 <% } %>
         </tbody>
     </table>
+
+
 
 </body>
 

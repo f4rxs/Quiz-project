@@ -1,5 +1,3 @@
-<!-- views/instructor-login.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +7,6 @@
     <title>Instructor Login</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Include any additional stylesheets or scripts you may need -->
     <style>
         body {
             background-image: url(https://e0.pxfuel.com/wallpapers/149/259/desktop-wallpaper-web-development.jpg);
@@ -240,52 +237,80 @@
 
 <body>
 
-
-
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <div class="navbar-brand">Quiz System </div>
+
+            <!-- Navbar Brand -->
+            <div class="navbar-brand">Quiz System</div>
+
+            <!-- Navbar Toggler Button -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Collapse Section -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar Navigation Items -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <!-- Home Link -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
                     </li>
+
+                    <!-- New Instructor Link with Animated Message -->
                     <a id="animatedMessage" class="navbar-text" href="/quizsystem/sign/instructor">New instructor? Click
                         here!</a>
-            </div>
-        </div>
+
+                </ul> <!-- End of Navbar Navigation Items -->
+
+            </div> <!-- End of Navbar Collapse Section -->
+
+        </div> <!-- End of Container Fluid -->
+
+        <!-- Include Social Links Partial -->
         <%- include('partials/social') %>
-    </nav>
+
+    </nav> <!-- End of Navigation Bar -->
 
 
 
+    <!-- Container with top margin -->
     <div class="container mt-5">
+
+        <!-- Heading for Instructor Login -->
         <h1 class="text-center mb-4">Instructor Login</h1>
+
+        <!-- Login Form -->
         <form action="/quizsystem/instructor-login" method="post" class="mt-4">
+
+            <!-- Email Input -->
             <div class="form-group">
                 <label for="Email">Email:</label>
-                <input type="email" id="email" name="email" class="form-control ">
+                <input type="email" id="email" name="email" class="form-control">
+            </div>
 
-                <div class="form-group">
-                    <label for="Password">Password:</label>
-                    <input type="password" id="password" name="password" class="form-control ">
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="Password">Password:</label>
+                <input type="password" id="password" name="password" class="form-control">
 
-                    <% if (instructor.errorMessage) { %>
-                        <%= instructor.errorMessage %>
-                            <% } %>
-                </div>
+                <!-- Display error message if present -->
+                <% if (instructor.errorMessage) { %>
+                    <%= instructor.errorMessage %>
+                        <% } %>
+            </div>
 
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
 
-            </div> <button type="submit" class="btn btn-primary btn-block">Login</button>
-        </form>
+        </form> <!-- End of Login Form -->
 
-
-    </div>
+    </div> <!-- End of Container -->
 
 
 

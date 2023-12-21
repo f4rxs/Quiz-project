@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcement Page</title>
+
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        #announcements-container {
+            margin-top: 20px;
+        }
+
+        .announcement {
+            background-color: #e0e0e0;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .announcement p {
+            margin: 0;
+        }
+
+        .announcement strong {
+            color: #007bff;
+        }
+
+        .announcement small {
+            color: #777;
+            display: block;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Announcements Container -->
+    <div class="container">
+
+        <!-- Heading for Announcements -->
+        <h2>Announcements</h2>
+
+        <!-- Container for Announcements -->
+        <div id="announcements-container">
+            <!-- Loop through each announcement -->
+            <% announcements.forEach(announcement=> { %>
+                <!-- Individual Announcement -->
+                <div class="announcement">
+                    <!-- Instructor ID and Announcement Content -->
+                    <p><strong>
+                            <%= announcement.InstructorID %>
+                        </strong>: <%= announcement.Content %>
+                    </p>
+
+                    <!-- Timestamp for the Announcement -->
+                    <small>
+                        <%= announcement.Timestamp %>
+                    </small>
+
+                    <!-- Form to Check the Announcement -->
+                    <form action="/quizsystem/check-announc/<%=announcement.AnnouncementID %>" method="GET">
+                        <!-- Use method override to simulate DELETE request -->
+                        <input type="hidden" name="_method" value="DELETE">
+                        <!-- Check Button -->
+                        <button type="submit" class="delete-button">Check</button>
+                    </form>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

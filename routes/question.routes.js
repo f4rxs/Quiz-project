@@ -16,11 +16,10 @@ router.delete('/question/:questionId', deleteQuestionController);
 router.post('/question', validateCreatQuiz, createQuestionController);
 
 // render routes
-
 router.get('/create-question', async (req, res) => {
     console.log('Session Object:', req.session);
     
-    if (!req.session || !req.session.instructorID) {
+    if (!req.session.instructorID) {
         return res.status(400).send('Access denied');
     }
 
@@ -31,5 +30,16 @@ router.get('/create-question', async (req, res) => {
 });
 
 router.get('/delete-question/:questionId',deleteQuestionController);
+
+router.get('/quizsystem/questions/:quizID', (req, res) => {
+   
+    
+    const { quizID } = req.params;
+  
+    
+    res.render('questions', { quizID });
+  });
+
+
 
 module.exports = router;

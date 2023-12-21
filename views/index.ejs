@@ -162,47 +162,53 @@
 
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar Structure -->
     <nav class="navbar navbar-expand-lg">
+
+        <!-- Container Fluid for Responsive Design -->
         <div class="container-fluid">
-            <div class="navbar-brand">Quiz System </div>
+
+            <!-- Navbar Brand -->
+            <div class="navbar-brand">Quiz System</div>
+
+            <!-- Navbar Collapse Button for Responsive Design -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <!-- Navbar Navigation Items -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <!-- Home Link with 'active' class for current page indication -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
+
+                    
+
                 </ul>
-            </div>
-        </div>
 
-        <%- include('partials/social') %>
+            </div> <!-- End of Navbar Collapse -->
 
-    </nav>
+            <!-- Include Social Links Partial -->
+            <%- include('partials/social') %>
 
-    <!-- Main Content -->
+        </div> <!-- End of Container Fluid -->
+
+    </nav> <!-- End of Navigation Bar -->
+
+    <!-- Main Content Container -->
     <div class="container">
+
+        <!-- About Section -->
         <div id="about" class="mb-4">
             <h1>Welcome to the Quiz System</h1>
             <p class="lead">Enhance your learning experience with our interactive quiz platform. Choose your role and
                 get started!</p>
         </div>
 
-        <!-- Role Selection -->
+        <!-- Card Deck for Role Selection -->
         <div class="card-deck">
+
+            <!-- Student Card -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Student</h5>
@@ -211,6 +217,8 @@
                     <a href="/quizsystem/login/student" class="btn btn-primary">Login as Student</a>
                 </div>
             </div>
+
+            <!-- Instructor Card -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Instructor</h5>
@@ -219,11 +227,14 @@
                     <a href="/quizsystem/login/instructor" class="btn btn-primary">Login as Instructor</a>
                 </div>
             </div>
-        </div>
-    </div>
 
+        </div> <!-- End of Card Deck -->
 
+    </div> <!-- End of Main Content Container -->
+
+    <!-- Include Footer Partial -->
     <%- include('partials/footer') %>
+
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

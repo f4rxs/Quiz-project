@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   
+    <title>Solve it</title>
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            background-image: url('path/to/your/background-image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1,
+        p {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            margin-top: 20px;
+            width: 80%;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease-in-out;
+            margin-top: 20px;
+            align-self: flex-end;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Quiz details -->
+    <h1>
+        <%= quiz[0].Title %>
+    </h1>
+    <p>
+        <%= quiz[0].Description %>
+    </p>
+
+    <!-- Quiz form -->
+    <form action="/quizsystem/submit-quiz" method="post">
+        <!-- Include the quizID and studentID in hidden fields -->
+        <input type="hidden" name="studentID" value="<%= studentID %>">
+        <input type="hidden" name="quizID" value="<%= quizID %>">
+
+        <!-- Loop through each question in the 'questions' array -->
+        <% let questionCounter=1; %>
+            <% for (const question of questions) { %>
+                <!-- Display question details -->
+                <h2>Question <%= questionCounter %>
+                </h2>
+                <p>
+                    <%= question.QuestionText %>
+                </p>
+
+                <!-- Loop through choices for the question -->
+                <% for (const choice of choices) { %>
+                    <% if (choice.QuestionID===question.QuestionID) { %>
+                        <label>
+                            <input type="radio" name="question<%= question.QuestionID %>" value="<%= choice.ChoiceID %>"
+                                required>
+                            <%= choice.ChoiceText %>
+                        </label>
+                        <% } %>
+                            <% } %>
+
+                                <hr>
+                                <% questionCounter++; %>
+                                    <% } %>
+
+                                        <!-- Submit button -->
+                                        <button type="submit">Submit Quiz</button>
+    </form>
+</body>
+
+</html>

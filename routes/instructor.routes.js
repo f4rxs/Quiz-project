@@ -46,6 +46,8 @@ router.get('/login/instructor', (req, res) => {
 router.get('/sign/instructor', (req, res) => {
     res.render('instructor-signup');
 });
+
+
 router.get('/instructor-page', authMiddleware, (req, res) => {
     const instructor = req.user;
     res.render('instructorPage', { instructor });
@@ -55,10 +57,10 @@ router.get('/instructor/students', authMiddleware, (req, res) => {
     res.redirect('/students');
 });
 
-router.post('/update-instructor/:id', updateInstructorByIDController,(req, res) => {
+router.post('/update-instructor/:id', updateInstructorByIDController, (req, res) => {
 });
 
-router.post('/update-instructor/pass/:id',changePasswordController,(req,res)=>{    
+router.post('/update-instructor/pass/:id', changePasswordController, (req, res) => {
 });
 
 
@@ -71,6 +73,27 @@ router.get('/logout', (req, res) => {
         res.redirect('/quizsystem/login/instructor');
     });
 });
+
+
+router.get('/send-announ/:InstructorID', (req, res) => {
+    try {
+        console.log('Session Object:', req.session);
+        if (!req.session || !req.session.instructorID) {
+            return res.status(400).send('Access denid');
+        }
+
+        const instructorID = req.session.instructorID;
+
+        res.render('instructor-announ', { instructorID });
+
+    } catch (error) {
+        console.error('Error fetching instructor ID:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+
+});
+
 
 
 

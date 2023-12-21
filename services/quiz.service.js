@@ -224,6 +224,45 @@ const getQuestionsForQuiz = async (QuizID) => {
 };
 
 
+const getQuestionsWithChoicesOfAQuiz = async (quizID) => {
+    try {
+        const result = await query(
+            'SELECT q.QuestionID, q.QuestionText, c.ChoiceID, c.ChoiceText, c.IsCorrect ' +
+            'FROM Question q ' +
+            'JOIN Choices c ON q.QuestionID = c.QuestionID ' +
+            'WHERE q.QuizID = ?',
+            [quizID]
+        );
+
+        const questions = [];
+        let currentQuestion = null;
+
+        for (const row of result) {
+            if (!currentQuestion || currentQuestion.QuestionID !== row.QuestionID) {
+                
+                currentQuestion = {
+                    QuestionID: row.QuestionID,
+                    QuestionText: row.QuestionText,
+                    choices: [],
+                };
+                questions.push(currentQuestion);
+            }
+
+            // Add choice to the current question's choices array
+            currentQuestion.choices.push({
+                ChoiceID: row.ChoiceID,
+                ChoiceText: row.ChoiceText,
+                IsCorrect: row.IsCorrect,
+            });
+        }
+
+        return questions;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+
 
 
 
@@ -238,6 +277,6 @@ module.exports = {
     updateQuiz,
     deleteQuizById,
     getQuestionsForQuiz,
-
+    getQuestionsWithChoicesOfAQuiz
 }
 

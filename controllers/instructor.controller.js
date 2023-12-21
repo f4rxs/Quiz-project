@@ -46,17 +46,17 @@ const registerInstructorController = async (req, res) => {
     if (result.error === 'Instructor already registered') {
       res.status(400).json({ message: 'Instructor is already registered' });
     } else if (result.affectedRows === 1) {
-      res.render('instructor-login');
-      // res.status(200).json({ message: 'Instructor registered successfully' });
+      // Use res.redirect instead of res.status(200).json
     } else {
-      res.status(500).json({ message: 'Instructor registration failed' });
+      res.redirect('/quizsystem/login/instructor');
+
     }
   } catch (error) {
-    // Log the error and send a 500 Internal Server Error response with an error message
     console.error('Error in registerInstructorController:', error);
     res.status(500).json({ message: 'An error occurred during registration' });
   }
 };
+
 
 
 
@@ -264,7 +264,8 @@ const changePasswordController = async (req, res) => {
     const result = await changeInstructorPassword(id, newPassword);
 
     if (result.message === 'Password changed successfully') {
-      res.status(200).json({ message: 'Password changed successfully' });
+      res.redirect('/quizsystem/login/instructor');
+      // res.status(200).json({ message: 'Password changed successfully' });
     } else {
       res.status(404).json({ message: `Instructor with ID ${id} not found - Password change failed` });
     }
@@ -325,6 +326,8 @@ const instructorLoginController = async (req, res) => {
     res.render('instructor-login', { instructor: { errorMessage } });
   }
 };
+
+
 
 
 

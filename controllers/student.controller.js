@@ -4,11 +4,19 @@ const { registerStudent,
     getAllStudentsUserNames,
     deleteStudentById,
     updateStudentById,
-    changeStudentPassword, getAllStudents, getStudentByEmail, studentLoginService } = require('../services/student.service');
+    changeStudentPassword, getAllStudents,
+     getStudentByEmail, studentLoginService } = require('../services/student.service');
+     
 const { validateRegisterStudent,
     validateUpdateStudent } = require('../validaters/student.validator');
 
+const { getQuizByID, getQuestionsForQuiz, getQuestionsWithChoicesOfAQuiz } = require('../services/quiz.service');
+const { getChoicesByQuizId } = require('../services/choices.service');
+const { createResult, calculateQuizScoreService } = require('../services/result.service');
+
 const { generateToken } = require('../authentication/authn');
+const session = require('express-session');
+const { message } = require('statuses');
 
 /**
  * Get a student by ID.
@@ -158,7 +166,7 @@ const deleteStudentByIdController = async (req, res) => {
 
             // Send a 200 OK response with a success message
             // res.status(200).json({ message: 'Student deleted successfully.' });
-            res.redirect('/quizsystem/students');
+            res.redirect('/quizsystem/login/student');
         } else {
 
             // Send a 404 Not Found response with an error message
@@ -214,7 +222,7 @@ const updateStudentByIdController = async (req, res) => {
 
         if (result.affectedRows > 0) {
             // res.render('getStudents', { studentID: studentID }, { message: 'Student updated successfully.' });
-            res.redirect('/quizsystem/students');
+            res.redirect('/quizsystem/login/student');
 
             // res.status(200).json({ message: 'Student updated successfully.' });
         } else {
@@ -267,7 +275,8 @@ const changeStudentPasswordController = async (req, res) => {
 
         // Check the result and send the appropriate response
         if (result.message === 'Password changed successfully') {
-            res.status(200).json({ message: 'Password changed successfully' });
+            res.redirect('/quizsystem/login/student');
+            // res.status(200).json({ message: 'Password changed successfully' });
         } else {
             res.status(404).json({ message: `student with ID ${id} not found - Password change failed` });
         }
@@ -320,20 +329,99 @@ const studentLoginController = async (req, res) => {
     const { email, password } = req.body;
 
     try {
+
         const studentDetails = await studentLoginService(email, password);
         if (studentDetails) {
-            res.render("studentPage");
-            // res.status(200).json(studentDetails);
+            const token = generateToken({ userId: studentDetails.studentID, role: 'student' });
+            req.session.studentID = studentDetails.studentID;
+            req.session.user = {
+                studentID: studentDetails.studentID,
+                role: 'student'
+            };
+
+            req.session.save(err => {
+                if (err) {
+                    console.error(`Error saving session: ${err.message}`);
+                    res.status(500).send('Internal server error');
+                } else {
+                    res.render("studentPage", { student: studentDetails, token });
+                }
+            });
         } else {
             const errorMessage = 'Invalid email or password';
-            res.render("studentPage", { student: { errorMessage } });
-            // res.status(401).json({ message: 'Login failed' });
+
+            // Render the studentPage template with an error message
+            res.render("studentPage", { student: { studentDetails: { StudentID: null }, errorMessage } });
+
         }
     } catch (error) {
-        console.error(`student login failed: ${error.message}`);
+        console.error(`Student login failed: ${error.message}`);
         res.status(401).json({ message: 'Login failed', error: error.message });
     }
 };
+
+
+const takeQuizController = async (req, res) => {
+    try {
+        const { studentID, quizID } = req.body;
+
+
+        // Call the getQuizByID function to retrieve the quiz by ID
+        const quiz = await getQuizByID(quizID);
+
+        // Check if quizzes were found for the provided QuizID
+        if (quiz.length > 0) {
+            // Retrieve questions for the specified quiz
+            const questions = await getQuestionsForQuiz(quizID);
+
+            // Check if questions were found
+            if (questions.length > 0) {
+
+                const choices = await getChoicesByQuizId(quizID);
+
+                if (choices.length > 0)
+                    res.render('take-quiz', { quiz, questions, choices, studentID, quizID });
+            } else {
+                // No questions found for the given Quiz ID
+                res.status(404).json({ message: `No question found for the given Quiz ID ${quizID}` });
+            }
+        } else {
+            // If no quizzes were found, return a 404 Not Found response
+            res.status(404).json({ message: `Invalid quiz ID -> ${quizID}` });
+        }
+    } catch (error) {
+        // Log and send a 500 Internal Server Error response in case of an error
+        console.error('Error in takeQuizController', error);
+        res.status(500).json({ message: 'An error occurred during taking the quiz' });
+    }
+};
+
+const submitQuizController = async (req, res) => {
+    try {
+
+        const { studentID, quizID, ...selectedChoices } = req.body;
+
+        // Retrieve correct choices for each question
+        const questions = await getQuestionsWithChoicesOfAQuiz(quizID);
+
+        // Calculate quiz score using the service
+        const Score = await calculateQuizScoreService(quizID, selectedChoices, questions);
+
+        // Save the result in the database
+        const result = await createResult(studentID, quizID, Score);
+
+        res.render('quiz-submission-success', { Score, totalQuestions: questions.length });
+
+    } catch (error) {
+        console.error('An error occurred in submitQuizController: ', error);
+        res.status(500).json({ message: 'An error occurred while submitting the quiz' });
+    }
+};
+
+
+
+
+
 // Export the controller function for use in routes
 module.exports = {
     getStudentByIDController,
@@ -344,5 +432,7 @@ module.exports = {
     changeStudentPasswordController,
     getAllStudentsController,
     getStudentByEmailController,
-    studentLoginController
+    studentLoginController,
+    takeQuizController,
+    submitQuizController
 };

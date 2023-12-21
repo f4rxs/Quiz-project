@@ -21,17 +21,22 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar-brand {
-            font-size: 1.5rem;
+        .navbar-brand,
+        .username,
+        .email {
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
         }
 
-        .navbar-nav .nav-link {
-            color: #fff !important;
+        .navbar-brand:hover,
+        .username:hover,
+        .email:hover {
+            color: #45a049;
         }
 
-        .navbar-nav .nav-link:hover {
-            color: #007bff !important;
-        }
+
 
         .navbar-toggler-icon {
             background-color: #fff;
@@ -39,16 +44,13 @@
 
         .container {
             margin-top: 50px;
-            background-color: rgba(120, 182, 166, 0.932);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 30px;
         }
 
         #welcome-message {
-            color: rgb(182, 190, 188);
-            position: relative;
-            right: 2%;
+            color: #fff;
             font-size: 30px;
             font-weight: bold;
             margin-bottom: 20px;
@@ -59,10 +61,8 @@
             border-radius: 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            position: relative;
-            left: 500px;
             width: 18rem;
-            margin-bottom: 20px;
+            margin: 0 auto;
             transition: transform 0.3s;
             background-color: #1b1a1a;
         }
@@ -85,7 +85,6 @@
         .btn-primary {
             background-color: #272f38;
             border-radius: 13px;
-
         }
 
         .btn-primary:hover {
@@ -94,9 +93,44 @@
             color: #fff;
         }
 
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .popup-container:target,
+        .overlay:target {
+            display: block;
+        }
+
         #settingsModal {
             background: rgba(0, 0, 0, 0.5);
-            /* Semi-transparent black background */
         }
 
         #settingsModalLabel {
@@ -105,10 +139,8 @@
 
         .modal-content {
             background-color: #fff;
-            /* White background for modal content */
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            /* Shadow for a subtle lift effect */
         }
 
         .modal-header {
@@ -127,9 +159,9 @@
 
         .close {
             color: #fff;
-            
+
             opacity: 1;
-           
+
         }
 
         .close:hover {
@@ -140,30 +172,50 @@
             padding: 20px;
         }
     </style>
+
 </head>
 
 <body>
 
 
+    <!-- Navigation Bar for Instructor Page -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+        <!-- Navbar Brand - Instructor Page -->
         <li class="navbar-brand">Instructor Page</li>
+
+        <!-- User Information - Username and Email -->
+        <li class="username"> Username : <%= instructorDetails.instructorDetails.Username %>
+        </li>
+        <li class="email"> Email: <%= instructorDetails.instructorDetails.Email %>
+        </li>
+
+        <!-- Navbar Toggler Button for Responsive Design -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/quizsystem/students">Display All Students</a>
-                </li>
 
+        <!-- Navbar Collapse Section -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- Navbar Navigation Items -->
+            <ul class="navbar-nav ml-auto">
+
+                <!-- View Quizzes Link -->
                 <li class="nav-item active">
                     <a class="nav-link"
                         href="/quizsystem/my-quizzes/<%= instructorDetails.instructorDetails.InstructorID %>">View
                         Quizzes</a>
                 </li>
 
-                <!--  dropdown menu  -->
+                <li class="nav-item active">
+                    <a class="nav-link" href="/quizsystem/students %>">View
+                        students</a>
+                </li>
+
+
+                <!-- Dropdown Menu for Instructor Actions -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -171,19 +223,31 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
+                        <!-- Settings Option with Modal Trigger -->
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#settingsModal">Settings</a>
+
+                        <!-- Divider Line in Dropdown Menu -->
                         <div class="dropdown-divider"></div>
+
+                        <!-- Logout Option -->
                         <a class="dropdown-item" href="/quizsystem/logout">Logout</a>
                     </div>
                 </li>
-            </ul>
-        </div>
-    </nav>
 
-    <h1 id="welcome-message" class="text-center mb-4">Welcome <%=instructorDetails.instructorDetails.Username%></h1>
+            </ul> <!-- End of Navbar Navigation Items -->
+
+        </div> <!-- End of Navbar Collapse Section -->
+
+    </nav> <!-- End of Navigation Bar for Instructor Page -->
 
 
+    <h1 id="welcome-message" class="text-center mb-4">Welcome <%=instructorDetails.instructorDetails.Username%>
+    </h1>
+
+
+    <!-- Row with Three Cards - Text Centered -->
     <div class="row text-center">
+
         <!-- Card 1: Create a Quiz -->
         <div class="col-md-12">
             <div class="card">
@@ -195,36 +259,33 @@
             </div>
         </div>
 
-        <!-- Card 2: Check Results for a Specific Quiz -->
+        
+        <!-- Card 2: Add a Small Container -->
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">View Results</h5>
-                    <p class="card-text">View results for a specific quiz.</p>
-                    <a href="" class="btn btn-primary">Add</a>
+                    <h5 class="card-title">Post an Announcement</h5>
+                    <p class="card-text">Send an announcement for a student.</p>
+                    <a href="/quizsystem/send-announ/<%=instructorDetails.instructorDetails.InstructorID %>"
+                        class="btn btn-primary">Post</a>
                 </div>
             </div>
         </div>
 
-        <!-- Card 3: Add a Small Container -->
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Instructor Info</h5>
-                    <p class="card-text">View and update your instructor information.</p>
-                    <a href="#" class="btn btn-primary">View Info</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
+    </div> <!-- End of Row with Three Cards - Text Centered -->
 
 
-    <!-- Modal: Settings Modal -->
+    <!-- Settings Modal -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel"
         aria-hidden="true">
+
+        <!-- Modal Dialog with Scrollable Content -->
         <div class="modal-dialog modal-dialog-scrollable" role="document">
+
+            <!-- Modal Content -->
             <div class="modal-content">
+
+                <!-- Modal Header with Title and Close Button -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="settingsModalLabel">Settings</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -232,41 +293,37 @@
                     </button>
                 </div>
 
+                <!-- Important Note Section -->
+                <h1 style="font-size: 1em; font-weight: bold;">Updating the following will take you back to the login
+                    page</h1>
+
+                <!-- Modal Body -->
                 <div class="modal-body">
-
-                    <!-- Delete Account Form -->
-                    <h1>Delete Account</h1>
-                    <form action="/quizsystem/instructor-delete/<%= instructorDetails.instructorDetails.InstructorID %>"
-                        method="GET" id="deleteAccountForm">
-
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <p>Are you sure you want to delete your account?</p>
-                                <button type="submit" class="btn btn-danger">Delete Account</button>
-                            </li>
-                        </ul>
-                    </form>
 
                     <!-- Update Account Form -->
                     <h1>Update Account</h1>
                     <form action="/quizsystem/update-instructor/<%=instructorDetails.instructorDetails.InstructorID %>"
                         method="POST" id="updateAccountForm">
 
+                        <!-- New Name Input -->
                         <div class="form-group">
                             <label for="newName">New Name</label>
                             <input type="text" class="form-control" id="username" name="username">
                         </div>
 
+                        <!-- New Email Input -->
                         <div class="form-group">
                             <label for="newEmail">New Email</label>
                             <input type="email" class="form-control" id="email" name="email">
                         </div>
 
+                        <!-- New Password Input -->
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
                             <input type="password" class="form-control" id="password" name="password">
                         </div>
 
+                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary">Update Account</button>
                     </form>
 
@@ -276,23 +333,24 @@
                         action="/quizsystem/update-instructor/pass/<%=instructorDetails.instructorDetails.InstructorID %>"
                         method="POST" id="changePasswordForm">
 
+                        <!-- New Password Input -->
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
                             <input type="password" class="form-control" id="newPassword" name="newPassword">
                         </div>
 
+                        <!-- Submit Button -->
                         <button type="submit" class="btn btn-primary">Change Password</button>
                     </form>
 
-                </div>
-            </div>
-        </div>
-    </div>
+                </div> <!-- End of Modal Body -->
 
-    </div>
-    </div>
-    </div>
-    </div>
+            </div> <!-- End of Modal Content -->
+
+        </div> <!-- End of Modal Dialog -->
+
+    </div> <!-- End of Settings Modal -->
+
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

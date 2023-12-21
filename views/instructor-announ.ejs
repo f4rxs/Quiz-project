@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Question</title>
+    <title>Create Announcement</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -17,8 +17,8 @@
             min-height: 100vh;
         }
 
-        form {
-            background-color: #fff;
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -36,8 +36,8 @@
             color: #555;
         }
 
-        textarea,
         input[type="text"],
+        textarea,
         input[type="number"] {
             width: 100%;
             padding: 10px;
@@ -53,7 +53,8 @@
             display: none;
         }
 
-        button {
+        .button-link {
+            display: block;
             width: 100%;
             padding: 10px;
             background-color: #d1c626;
@@ -66,37 +67,43 @@
             cursor: pointer;
         }
 
-        button:hover {
+        .button-link:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 
 <body>
-    <!-- HTML Form for Adding a Question -->
-    <form action="/quizsystem/question" method="post">
+    <!-- Announcement Form Section -->
+    <div class="message-box">
 
-        <!-- Form Heading -->
-        <h1>Add Question</h1>
+        <!-- Announcement Form Heading -->
+        <h1>Send an Announcement</h1>
 
-        <!-- Question Text Input -->
-        <label for="questionText">Question Text:</label>
-        <textarea id="questionText" name="QuestionText" required></textarea>
+        <!-- Announcement Form -->
+        <form action="/quizsystem/announcement" method="post">
 
-        <!-- Correct Answer Input -->
-        <label for="correctAnswer">Correct Answer:</label>
-        <input type="text" id="correctAnswer" name="CorrectAnswer" required>
+            <!-- Content Input -->
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea>
 
-        <!-- Quiz ID Input (Read-only) -->
-        <label for="quizID">Quiz ID:</label>
-        <input type="text" id="quizID" name="QuizId" value="<%= quizID %>" readonly>
+            <!-- Timestamp Input -->
+            <label for="timestamp">Timestamp:</label>
+            <input type="date" id="timestamp" name="timestamp" value="Timestamp" required>
 
-        <!-- Instructor ID Input (Hidden) -->
-        <input type="hidden" name="InstructorID" value="<%= instructorID %>">
+            <!-- Student ID Input -->
+            <label for="studentID">Student ID:</label>
+            <input type="text" id="studentID" name="studentID" required>
 
-        <!-- Submit Button -->
-        <button type="submit">Add Question</button>
-    </form>
+            <!-- Instructor ID Input (hidden) -->
+            <input type="hidden" name="instructorID" value="<%= instructorID %>">
+
+            <!-- Create Announcement Button -->
+            <button type="submit" class="button-link">Create Announcement</button>
+
+        </form> <!-- End of Announcement Form -->
+
+    </div> <!-- End of Announcement Form Section -->
 </body>
 
 </html>

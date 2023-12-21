@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instructor Sign Up</title>
+    <title>Student Sign Up</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -155,46 +155,63 @@
 
 <body>
 
+    <!-- Navigation Bar (Navbar) -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
+            <!-- Navbar Brand -->
             <div class="navbar-brand">Quiz System </div>
+
+            <!-- Navbar Toggler Button (for small screens) -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Navbar Collapse Section (contains navigation links) -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar Links (unordered list) -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- Home Link -->
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/quizsystem">Home</a>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <!-- Social Links (included from partials/social) -->
         <%- include('partials/social') %>
     </nav>
 
-    <!-- Class: card-container -->
+    <!-- Student Sign Up Form (Card Container) -->
     <div class="card-container">
+        <!-- Form Heading -->
         <h1 class="text-center mb-4">Student Sign Up</h1>
 
+        <!-- Sign Up Form -->
         <form method="POST" action="/quizsystem/student">
+            <!-- First Name Input -->
             <div class="form-group">
                 <label for="Username">First Name</label>
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
+
+            <!-- Email Input -->
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
+
+            <!-- Password Input -->
             <div class="form-group">
-                <label for="password">password</label>
-                <input type="text" class="form-control" id="password" name="password" required>
-                
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
+
+            <!-- Sign Up Button -->
             <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

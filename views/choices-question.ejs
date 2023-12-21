@@ -74,29 +74,32 @@
 
 <body>
     <!-- HTML Form for Adding a Question -->
-    <form action="/quizsystem/question" method="post">
+    <form action="/quizsystem/choices" method="post">
 
         <!-- Form Heading -->
-        <h1>Add Question</h1>
+        <h1>Add Choices</h1>
 
-        <!-- Question Text Input -->
-        <label for="questionText">Question Text:</label>
-        <textarea id="questionText" name="QuestionText" required></textarea>
+        <!-- Display Question ID -->
+        <p>Question ID: <%= questionID %>
+        </p>
 
-        <!-- Correct Answer Input -->
-        <label for="correctAnswer">Correct Answer:</label>
-        <input type="text" id="correctAnswer" name="CorrectAnswer" required>
+        <!-- Hidden input to carry QuestionID to the server -->
+        <input type="hidden" name="QuestionID" value="<%= questionID %>">
 
-        <!-- Quiz ID Input (Read-only) -->
-        <label for="quizID">Quiz ID:</label>
-        <input type="text" id="quizID" name="QuizId" value="<%= quizID %>" readonly>
+        <!-- Choice Text Input -->
+        <label for="choiceText">Choice Text:</label>
+        <input type="text" id="choiceText" name="ChoiceText" required>
 
-        <!-- Instructor ID Input (Hidden) -->
-        <input type="hidden" name="InstructorID" value="<%= instructorID %>">
+        <!-- Is Correct Input -->
+        <label for="isCorrect">Is Correct:</label>
+        <input type="text" id="isCorrect" name="IsCorrect" placeholder="true or false" required>
 
         <!-- Submit Button -->
-        <button type="submit">Add Question</button>
+        <button type="submit">Add Choice</button>
+
     </form>
+
+
 </body>
 
 </html>

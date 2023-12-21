@@ -6,16 +6,16 @@ const { createQuizController,
     listQuizzesController,
     getQuizzesByInstructorIDController,
     updatedQuizController, deleteQuizByIdController,
-    getQuestionsForQuizController,
+    getQuestionsForQuizController, getQuestionsWithChoicesOfAQuizController
 } = require(`../controllers/quiz.controller`);
 
 
 //get routers 
 router.get('/quiz/:QuizID', getQuizByIDController);
-router.get('/quiz', listQuizzesController);
+router.get('/quiz', listQuizzesController)
 router.get('/quiz/instructor/:instructorID', getQuizzesByInstructorIDController);
 router.get('/quiz/questions/:QuizID', getQuestionsForQuizController);
-// router.get('/quiz/result/:id',getResultsForQuizController)
+router.get('/quiz/questionsAndChoices/:quizID', getQuestionsWithChoicesOfAQuizController);
 
 //post routers
 router.post("/quiz", createQuizController);

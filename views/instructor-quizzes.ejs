@@ -1,5 +1,5 @@
 <!-- instructor-quizzes.ejs -->
-
+<!-- fix the update of quiz and questions  -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,7 +60,7 @@
         }
 
         .btn {
-            color:rgb(27, 25, 25);
+            color: rgb(27, 25, 25);
             background-color: #007bff;
             padding: 8px 12px;
             border-radius: 4px;
@@ -71,11 +71,12 @@
 
 <body>
 
-    <h1>Instructor quizzes</h1>
-
-
-
+    <!-- Heading for Instructor Quizzes -->
+    <h1>Instructor Quizzes</h1>
+    <p1 style="color:black; font-weight: bold;">to check the questions for a quiz click on its title</p1>
+    <!-- Quizzes Table -->
     <table>
+        <!-- Table Header -->
         <thead>
             <tr>
                 <th>Quiz ID</th>
@@ -85,33 +86,49 @@
                 <th>Actions</th>
             </tr>
         </thead>
+
+        <!-- Table Body -->
         <tbody>
+            <!-- Loop through quizzes and populate the table rows -->
             <% for (const quiz of quizzes) { %>
                 <tr>
+                    <!-- Quiz ID Column -->
                     <td>
                         <%= quiz.QuizID %>
                     </td>
+
+                    <!-- Title Column with Link to Quiz Questions -->
                     <td>
                         <a href="/quizsystem/quiz/questions/<%= quiz.QuizID %>"
                             style="text-decoration: underline; color: #007bff;">
                             <%= quiz.Title %>
                         </a>
                     </td>
+
+                    <!-- Description Column -->
                     <td>
                         <%= quiz.Description %>
                     </td>
+
+                    <!-- Time Limit Column -->
                     <td>
                         <%= quiz.TimeLimit %>
                     </td>
+
+                    <!-- Actions Column with Delete, Update, and Add Question Buttons -->
                     <td class="btn-container">
+                        <!-- Delete Quiz Form -->
                         <form class="btn-delete" action="/quizsystem/delete-quiz/<%= quiz.QuizID %>" method="GET">
                             <button type="submit" class="btn">Delete</button>
                         </form>
 
-                        <form class="btn-update" data-toggle="modal" data-target="#updateQuizModal">
-                            <button type="submit" class="btn">Update</button>
+                        <!-- view results Form -->
+                        <form class="btn-question" action="/quizsystem/result-quiz/<%=quiz.QuizID %>" method="get">
+                            <input type="hidden" name="QuizID" value="<%= quiz.QuizID %>">
+                            <button type="submit" class="btn">View results</button>
                         </form>
 
+                        <!-- Add Question Form -->
                         <form class="btn-question" action="/quizsystem/create-question" method="get">
                             <input type="hidden" name="QuizID" value="<%= quiz.QuizID %>">
                             <button type="submit" class="btn">Add question</button>
@@ -121,8 +138,6 @@
                 <% } %>
         </tbody>
     </table>
-
- 
 
 </body>
 

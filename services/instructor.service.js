@@ -207,5 +207,5 @@ module.exports = {
   getInstructorById,
   changeInstructorPassword,
   getInstructorByEmail,
-  instructorLoginService
+  instructorLoginService,
 };
